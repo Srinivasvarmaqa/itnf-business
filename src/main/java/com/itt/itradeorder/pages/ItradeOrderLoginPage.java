@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.itt.itradeorder.datamodelhelper.ItradeOrderDataModelHelperFactory;
+import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
 
 public class ItradeOrderLoginPage {
@@ -51,6 +52,7 @@ public class ItradeOrderLoginPage {
 		} else {
 			throw new RuntimeException("Unable to find Login button");
 		}
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
 
 	public void goToLoginPage(String url) throws Exception {
