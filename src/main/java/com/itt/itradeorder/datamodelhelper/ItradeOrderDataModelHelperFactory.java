@@ -12,6 +12,7 @@ public class ItradeOrderDataModelHelperFactory {
 	private static ItradeOrderDataModelHelperFactory itradeOrderModelHelperFactory = new ItradeOrderDataModelHelperFactory();
 	private ItradeOrderDataModelLoginUsers itradeOrderDataModelLoginUsers = new ItradeOrderDataModelLoginUsers();
 	private ItradeOrderDataModelNewOrder itradeOrderDataModelNewOrder = new ItradeOrderDataModelNewOrder();
+	private  ItradeOrderDataModelNewOrderDetails  itradeOrderDataModelNewOrderDetails = new  ItradeOrderDataModelNewOrderDetails();
 
 	@Getter
 	@Setter
@@ -23,5 +24,9 @@ public class ItradeOrderDataModelHelperFactory {
 
 	public ItradeOrderDataModelNewOrder getItradeOrderDataModelNewOrder() {
 		return this.itradeOrderDataModelNewOrder;
+	}
+	
+	public  ItradeOrderDataModelNewOrderDetails getItradeOrderDataModelNewOrderDetails() {
+		return this. itradeOrderDataModelNewOrderDetails;
 	}
 }

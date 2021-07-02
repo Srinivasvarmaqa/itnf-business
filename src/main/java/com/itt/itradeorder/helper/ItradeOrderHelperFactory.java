@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.itt.itradeorder.pages.ItradeOrderLoginPage;
+import com.itt.itradeorder.pages.ItradeOrderNewOrderDetailsPage;
 import com.itt.itradeorder.pages.ItradeOrderNewOrderPage;
 
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class ItradeOrderHelperFactory {
 	private static ItradeOrderHelperFactory itradeOrderHelperFactory = new ItradeOrderHelperFactory();
 	private ItradeOrderLoginPage itradeOrderLoginPage = new ItradeOrderLoginPage();
 	private ItradeOrderNewOrderPage itradeOrderNewOrderPage = new ItradeOrderNewOrderPage();
+	private ItradeOrderNewOrderDetailsPage itradeOrderNewOrderDetailsPage = new ItradeOrderNewOrderDetailsPage();
 	private static final String cssUserMenuArrowButton = "button.btn-user-menu.mat-icon-button";
 	private static final String xLogoutButton = "//span[contains(@class, 'itn-icon-logout')]/following-sibling::span[contains(text(), 'Logout')]";
 	
@@ -38,6 +40,10 @@ public class ItradeOrderHelperFactory {
 
 	public ItradeOrderNewOrderPage getItradeOrderNewOrderPage() {
 		return this.itradeOrderNewOrderPage;
+	}
+	
+	public ItradeOrderNewOrderDetailsPage getItradeOrderNewOrderDetailsPage() {
+		return this.itradeOrderNewOrderDetailsPage;
 	}
 
 	public void logout() throws Exception {

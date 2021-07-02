@@ -194,4 +194,11 @@ public class ItradeOrderNewOrderPage {
 		getBrowserDriver().click(byXpath(xSubmitButton));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
+	
+	public void clickOnCreateButton() throws Exception {
+		LOG.info("Click Create Order Button");
+		getBrowserDriver().click(withScroll(byXpath(xCreateButton)));	
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
+	}
+
 }
