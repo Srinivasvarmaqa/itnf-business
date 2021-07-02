@@ -27,7 +27,7 @@ public class OMSMenuNavigationPage {
 	public String openLeftSubMenu(String mainMenu, String subMenu) throws Exception {
 		OMSHelperFactory.switchToLeftFrame();
 		String cssMenu = String.format("a[title='%s']:not([href*='submenu']) + ul a[title='%s']", mainMenu, subMenu);
-		getBrowserDriver().click(byCssSelector(cssMenu));
+		getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.TEN_SECONDS_TIMEOUT));
 		String menuHeader = getBrowserDriver().getText(byCssSelector(cssMenu));
 		getBrowserDriver().waitForPageLoad();
 		return menuHeader;
@@ -37,10 +37,10 @@ public class OMSMenuNavigationPage {
 		OMSHelperFactory.switchToHeaderFrame();
 		String cssMenu = String.format("a[title='%s']", menu);
 		try {
-			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.TEN_SECONDS_TIMEOUT));
+			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.FIVE_SECONDS_TIMEOUT));
 		} catch (Exception e) {
 			this.clickRightArrow(2);
-			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.TEN_SECONDS_TIMEOUT));
+			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.FIVE_SECONDS_TIMEOUT));
 		}
 		String menuHeader = getBrowserDriver().getText(byCssSelector(cssMenu));
 		getBrowserDriver().waitForPageLoad();
