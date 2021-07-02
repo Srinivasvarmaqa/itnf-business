@@ -37,10 +37,10 @@ public class OMSMenuNavigationPage {
 		OMSHelperFactory.switchToHeaderFrame();
 		String cssMenu = String.format("a[title='%s']", menu);
 		try {
-			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.TWO_SECONDS_TIMEOUT));
+			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.TEN_SECONDS_TIMEOUT));
 		} catch (Exception e) {
 			this.clickRightArrow(2);
-			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.TWO_SECONDS_TIMEOUT));
+			getBrowserDriver().click(withCustomTimeout(byCssSelector(cssMenu), Timeout.TEN_SECONDS_TIMEOUT));
 		}
 		String menuHeader = getBrowserDriver().getText(byCssSelector(cssMenu));
 		getBrowserDriver().waitForPageLoad();
