@@ -22,9 +22,6 @@ public class ItradeOrderNewOrderPage {
 	private static String xShipTo = "//mat-label[contains(text(),'Ship To')]/../../../input";
 	private static String xCreateButton = "//span[contains(text(),'CREATE')]";
 	private static String cssCrossButton = "div.close-button span.itn-icon-close-x";
-	private static String nAddProduct = "add";
-	private static String idQuanity1 = "quantity1";
-	private static String idPrice1 = "price1";
 	private static String xSubmitButton = "//span[contains(text(),'Submit')]";
 	
 	
@@ -66,72 +63,45 @@ public class ItradeOrderNewOrderPage {
 		String shipTo = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getShipToWarehouse();
 		String shipFrom = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getShipFromWarehouse();
 		String routing = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getRouting();
-		String mode = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getMode();
 		String templateName = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getTemplatename();
-		String quantity1 = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getQuantity1();
-		String price1 = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getPrice1();
-		String product = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getAddproduct();
-		
+
 		LOG.info("Open Buyer Menu");
 		this.openNewOrder();
-		
+
 		LOG.info("Enter PO Number");
 		this.enterPONumber();
-		
-		if (shipTo!= null) {
-			this.shipTo(shipTo);
-		}
-		
-		if (vendor!= null) {
+
+		if (vendor != null) {
 			this.selectVendor(vendor);
 		}
 
-		if (routing!= null) {
+		if (routing != null) {
 			this.selectRouting(routing);
 		}
-		
+
 		this.addShipDate();
 		this.addArrivalDate();
 
-//		if (shipTo!= null) {
-//			this.shipTo(shipTo);
-//		}
-		
-		if (shipFrom!= null) {
+		if (shipTo != null) {
+			this.shipTo(shipTo);
+		}
+
+		if (shipFrom != null) {
 			this.shipFrom(shipFrom);
 		}
-		
+
 		LOG.info("Click Create Order Button");
 		getBrowserDriver().click(withScroll(byXpath(xCreateButton)));
-		
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		
-		this.addProduct(product, quantity1, price1);
-		this.clickOnSubmitButton();
-	}
 
-	public void addProduct(String product, String quantity, String price) throws Exception {
-		
-		LOG.debug("Add product");
-//		getBrowserDriver().click(byName(nAddProduct));
-		getBrowserDriver().sendValue(withText(byName(nAddProduct), product));
-		String xProductDropDown = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", product);
-		getBrowserDriver().click(byXpath(xProductDropDown));
-		
-		LOG.debug("Enter Quantity");
-		getBrowserDriver().sendValue(withText(byId(idQuanity1), quantity));
-		
-		LOG.debug("Enter Price");
-		getBrowserDriver().sendValue(withText(byId(idPrice1), price));
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
 
 	public void selectVendor(String vendor) throws Exception {
 		String xVendorOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", vendor);
 		LOG.debug("Click on the Seller field");
-//		getBrowserDriver().click(byXpath(xSeller));
-		getBrowserDriver().click(withScroll(byXpath(xSeller)));
+		getBrowserDriver().click(byXpath(xSeller));
 
-		LOG.debug("Select the vendor");
+		LOG.debug("Select the vendor:" + vendor);
 		getBrowserDriver().click(byXpath(xVendorOptions));
 	}
 
@@ -143,10 +113,10 @@ public class ItradeOrderNewOrderPage {
 
 	public void selectRouting(String routing) throws Exception {
 		String xRoutingOptins = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", routing);
-		LOG.debug("Click on the Seller field");
+		LOG.debug("Click on the Routing field");
 		getBrowserDriver().click(byXpath(xRouting));
 
-		LOG.debug("Select the routing");
+		LOG.debug("Select the routing option:" + routing);
 		getBrowserDriver().click(byXpath(xRoutingOptins));
 	}
 
@@ -165,22 +135,18 @@ public class ItradeOrderNewOrderPage {
 	public void shipTo(String shipTo) throws Exception {
 		String xShipToOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", shipTo);
 		LOG.debug("Click on the Ship To field");
-		
-		LOG.info("Click Create Order Button");
-		getBrowserDriver().click(withScroll(byXpath(xShipTo)));
-		
-//		getBrowserDriver().click(byXpath(xShipTo));
+		getBrowserDriver().click(byXpath(xShipTo));
 
-		LOG.debug("Select the routing");
+		LOG.debug("Select the ShipTo option:" + shipTo);
 		getBrowserDriver().click(byXpath(xShipToOptions));
 	}
 
 	public void shipFrom(String shipFrom) throws Exception {
 		String xShipFromOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", shipFrom);
-		LOG.debug("Click on the Ship To field");
+		LOG.debug("Click on the ShipFrom field");
 		getBrowserDriver().click(byXpath(xShipFrom));
 
-		LOG.debug("Select the routing");
+		LOG.debug("Select the shipFrom option:" + shipFrom);
 		getBrowserDriver().click(byXpath(xShipFromOptions));
 	}
 
@@ -196,9 +162,8 @@ public class ItradeOrderNewOrderPage {
 	}
 	
 	public void clickOnCreateButton() throws Exception {
-		LOG.info("Click Create Order Button");
+		LOG.info("Click on Create Order Button");
 		getBrowserDriver().click(withScroll(byXpath(xCreateButton)));	
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
-
 }
