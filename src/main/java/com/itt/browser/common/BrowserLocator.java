@@ -40,7 +40,7 @@ public class BrowserLocator {
 		if (System.getProperty("DEFAULT_TIMEOUT") != null) {
 			defaultTimeout = Integer.parseInt(System.getProperty("DEFAULT_TIMEOUT"));
 		} else {
-			defaultTimeout = 15;
+			defaultTimeout = 60;
 		}
 		return defaultTimeout;
 	}
