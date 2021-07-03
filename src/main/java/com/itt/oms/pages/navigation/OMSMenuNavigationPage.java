@@ -8,6 +8,7 @@ import com.itt.oms.helper.OMSHelperFactory;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 import static com.itt.browser.common.BrowserLocator.*;
 
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.slf4j.Logger;
 
 public class OMSMenuNavigationPage {
@@ -21,6 +22,7 @@ public class OMSMenuNavigationPage {
 		String cssMenu = String.format("a[title='%s']:not([href*='submenu'])", menu);
 		getBrowserDriver().click(byCssSelector(cssMenu));
 		getBrowserDriver().waitForPageLoad();
+		Thread.sleep(2000);
 		return getBrowserDriver().getText(byCssSelector(cssMenu));
 	}
 
@@ -30,6 +32,7 @@ public class OMSMenuNavigationPage {
 		getBrowserDriver().click(byCssSelector(cssMenu));
 		String menuHeader = getBrowserDriver().getText(byCssSelector(cssMenu));
 		getBrowserDriver().waitForPageLoad();
+		Thread.sleep(2000);
 		return menuHeader;
 	}
 	
@@ -52,7 +55,12 @@ public class OMSMenuNavigationPage {
 		for (int i = 0; i <= number; i++) {
 			try {
 				OMSHelperFactory.switchToHeaderFrame();
-				getBrowserDriver().click(withCustomTimeout(byCssSelector(cssGoRightArrow), Timeout.FIVE_SECONDS_TIMEOUT));
+				try {
+					getBrowserDriver().click(withCustomTimeout(byCssSelector(cssGoRightArrow), Timeout.FIVE_SECONDS_TIMEOUT));
+				} catch (ElementClickInterceptedException e) {
+					Thread.sleep(3000);
+					getBrowserDriver().scrollTo(byCssSelector(cssGoRightArrow));
+				}
 			} catch (Exception e) {
 				LOG.debug("Couldn't find the right arrow button");
 			}
