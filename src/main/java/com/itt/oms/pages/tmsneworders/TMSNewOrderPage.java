@@ -81,7 +81,7 @@ public class TMSNewOrderPage {
 		getBrowserDriver().selectDropDown(selectDropDownValue(byCssSelector(cssSelectCarrierDropDown), DROPDOWN.VISIBLETEXT.toString(), carrier));
 
 		getBrowserDriver().waitForPageLoad();
-
+		Thread.sleep(2000);
 		LOG.info("Switch to Main Frame");
 		OMSHelperFactory.switchToMainFrame();
 
@@ -106,8 +106,10 @@ public class TMSNewOrderPage {
 	    getBrowserDriver().click(byName(nSelectCarrierDropDown));
     }
 
-    public String getLoadNumber() throws Exception {
-    	return getBrowserDriver().getText(byCssSelector(cssLoadNumber));
-    }
+	public String getLoadNumber() throws Exception {
+		LOG.info("Get Load Number");
+		getBrowserDriver().waitForElement(byCssSelector(cssLoadNumber));
+		return getBrowserDriver().getText(byCssSelector(cssLoadNumber));
+	}
     
 }
