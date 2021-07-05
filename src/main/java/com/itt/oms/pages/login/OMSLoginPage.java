@@ -29,6 +29,7 @@ public class OMSLoginPage {
 		if (getBrowserDriver().waitForElement(byId(iDUserName)))  {
 			getBrowserDriver().sendValue(withText(withClearOption(byId(iDUserName), true), userName));
 			getBrowserDriver().waitForPageLoad();
+			Thread.sleep(1000);
 		} else {
 			throw new RuntimeException("Unable to find Username field");
 		}
@@ -38,6 +39,7 @@ public class OMSLoginPage {
 		LOG.info("ENTER USER PASSWORD");
 		if (getBrowserDriver().waitForElement(byId(iDPassword)))  {
 			getBrowserDriver().click(byId(iDPassword));
+			Thread.sleep(1000);
 			if (!getBrowserDriver().isElementPresent(byCssSelector(cssPasswordFocus))) {
 				getBrowserDriver().click(byId(iDPassword));
 			}
