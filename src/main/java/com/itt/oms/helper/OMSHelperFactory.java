@@ -126,14 +126,20 @@ public class OMSHelperFactory {
 	}
 
 	public boolean hasErrorMessage() throws Exception {
-		String xErrorCheck = "//div//*[contains(text(), 'Error Occurred') or contains(text(), 'error occurred') or contains(text(), 'unexpected error')  or contains(text(), 'Not Found') or contains(text(), 'Internal Server Error') or contains(text(), '404')]";
+		boolean hasError = false;
 		OMSHelperFactory.switchToMainFrame();
-		if (getBrowserDriver().isElementPresent(byXpath(xErrorCheck))) {
-			LOG.info("Error found in this page");
-			return true;
-		} else {
-			return false;
-		}
+		String pagesource = getBrowserDriver().getPageSource();
+		if (pagesource.contains("Error Occurred While Processing Request"))
+			hasError = true;
+		else if (pagesource.contains("unexpected error"))
+			hasError = true;
+		else if (pagesource.contains("Not Found"))
+			hasError = true;
+		else if (pagesource.contains("Internal Server Error"))
+			hasError = true;
+		else if (getBrowserDriver().getPageTitle().contains("404"))
+			hasError = true;
+		return hasError;
 	}
 
 	public void logout() throws Exception {
