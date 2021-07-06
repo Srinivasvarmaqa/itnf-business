@@ -35,6 +35,7 @@ public class ItradeOrderHelperFactory {
 	private static final String xLogoutButton = "//span[contains(@class, 'itn-icon-logout')]/following-sibling::span[contains(text(), 'Logout')]";
 	private static String xCloseFeedbackMessage = "//div[@class='cdk-overlay-container']//span[contains(text(), 'CLOSE')]";
 	private static String cssFeedbackMessage = "div.cdk-overlay-container div.sb-text";
+	private static String cssOKConfirmationDialogButton = ".mat-dialog-container > confirm-dialog .action-primary";
 	
 	@Getter
 	@Setter
@@ -80,6 +81,7 @@ public class ItradeOrderHelperFactory {
 		try {
 			getBrowserDriver().waitForElement(withCustomTimeout(byXpath(xCloseFeedbackMessage), Timeout.FIVE_SECONDS_TIMEOUT));
 			getBrowserDriver().click(byXpath(xCloseFeedbackMessage));
+			ItradeOrderHelperFactory.waitForloaderToDisapper();
 		} catch (Exception e) {
 			LOG.debug("Couldn't close the feedback message");
 		}
@@ -89,5 +91,10 @@ public class ItradeOrderHelperFactory {
 		LOG.debug("Get feedback Message");
 		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssFeedbackMessage), Timeout.FIVE_SECONDS_TIMEOUT));
 		return getBrowserDriver().getText(byCssSelector(cssFeedbackMessage));
+	}
+
+	public static void clickOnOkConfirmationDialogButton() throws Exception {
+		LOG.debug("Click on OK confirmation dialog");
+		getBrowserDriver().click(byCssSelector(cssOKConfirmationDialogButton));
 	}
 }

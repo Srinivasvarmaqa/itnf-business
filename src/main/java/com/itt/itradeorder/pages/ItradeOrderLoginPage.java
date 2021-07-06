@@ -91,7 +91,6 @@ public class ItradeOrderLoginPage {
 		}
 		LOG.info("LOGIN TO OMS AS: " + username);
 		enterUserName(username);
-		
 		enterPassword(password);
 		clickLoginButton();
 	}

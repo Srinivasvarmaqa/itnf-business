@@ -20,7 +20,9 @@ import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 public class ItradeOrderOrdersPage {
 	private static final Logger LOG = LoggerFactory.getLogger(ItradeOrderOrdersPage.class);
 	private static String classSearchIcon = "itn-icon-search";
-	private static String cssSearchInputText = "div.search-input";
+	private static String cssSearchInputText = ".search-toolbar div.search-input > input";
+	private static String xSearchButton = "//span[@class='itn-icon-search']";
+	private static String xSearchInput = "//input[@placeholder='Search']";
 
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
@@ -29,7 +31,14 @@ public class ItradeOrderOrdersPage {
 	}
 
 	public String getPOStatus(String poNumber) throws Exception {
-		String xPOStatus = String.format("//span[contains(text(), '%s')]/ancestor::div[@class='wj-cell']/following-sibling::div//div[@class='status-badge']", poNumber);
+		String xPOStatus = String.format(" //span[contains(text(), '%s')]/ancestor::div[contains(@class, 'wj-row')]/div[contains(@class,'wj-cell')]/following-sibling::div//div[@class='status-badge']", poNumber);
 		return getBrowserDriver().getText(byXpath(xPOStatus)).trim();
+	}
+
+	public void searchPOOrder(String ponumber) throws Exception {
+		LOG.info("Click on Search Button");
+		getBrowserDriver().click(byXpath(xSearchButton));
+		LOG.info("Enter PO Number");
+		getBrowserDriver().sendValue(withText(byXpath(xSearchInput),ponumber));
 	}
 }
