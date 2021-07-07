@@ -86,6 +86,8 @@ public class TMSNewOrderPage {
 		OMSHelperFactory.switchToMainFrame();
 
 		this.clickSubmitButton();
+		getBrowserDriver().waitForPageLoad();
+		Thread.sleep(2000);
 	}
 	
 	public void clickSubmitButton() throws Exception {
