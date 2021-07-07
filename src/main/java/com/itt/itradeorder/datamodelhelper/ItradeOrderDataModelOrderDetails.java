@@ -10,5 +10,8 @@ import lombok.Data;
 public class ItradeOrderDataModelOrderDetails {
 	private static final Logger LOG = LoggerFactory.getLogger(ItradeOrderDataModelOrderDetails.class);
 
-	List<ItradeOrderDataModelProducts> products;
+	List<ItradeOrderDataModelProducts> buyeraddproducts;
+	List<ItradeOrderDataModelProducts> vendoraddproducts;
+	List<ItradeOrderDataModelProducts> buyerupdateproducts;
+	List<ItradeOrderDataModelProducts> vendorupdateproducts;
 }

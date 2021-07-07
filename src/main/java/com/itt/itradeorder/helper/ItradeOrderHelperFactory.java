@@ -90,7 +90,9 @@ public class ItradeOrderHelperFactory {
 	public String getFeedbackMessage() throws Exception {
 		LOG.debug("Get feedback Message");
 		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssFeedbackMessage), Timeout.FIVE_SECONDS_TIMEOUT));
-		return getBrowserDriver().getText(byCssSelector(cssFeedbackMessage));
+		String feedBackMessage = getBrowserDriver().getText(byCssSelector(cssFeedbackMessage));
+		closeFeedbackMessage();
+		return feedBackMessage;
 	}
 
 	public static void clickOnOkConfirmationDialogButton() throws Exception {
