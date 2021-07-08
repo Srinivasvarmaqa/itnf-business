@@ -25,11 +25,7 @@ public class OMSDataModelHelperFactory {
 	@Getter
 	@Setter
 	private String project;
-//	public String getProject() { return this.project; }
-//
-//	public void setProject(String project) {
-//		this.project = project;
-//	}
+
 
 	public OMSDataModelLoginUsers getOmsDataModelLoginUsers() {
 		return this.omsDataModelLoginUsers;

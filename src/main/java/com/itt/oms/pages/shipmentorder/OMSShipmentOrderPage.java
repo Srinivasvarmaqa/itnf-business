@@ -2,6 +2,7 @@ package com.itt.oms.pages.shipmentorder;
 
 import org.slf4j.LoggerFactory;
 
+import com.itt.common.Timeout;
 import com.itt.factoryhelper.BrowserHelperFactory.ALERT;
 import com.itt.factoryhelper.BrowserHelperFactory.DROPDOWN;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
@@ -98,7 +99,7 @@ public class OMSShipmentOrderPage {
 	}
 
 	public void clickSubmitButton() throws Exception {
-		LOG.info("Click on Submit Button");
+		LOG.debug("Click on Submit Button");
 		getBrowserDriver().click(byCssSelector(cssSubmitButton));
 	}
 
@@ -125,7 +126,8 @@ public class OMSShipmentOrderPage {
 	}
 
 	public void selectBioEngineered() throws Exception {
-		getBrowserDriver().selectDropDown(selectDropDownValue(byCssSelector(cssBioEngineeredDropDown), DROPDOWN.VISIBLETEXT.toString(), "bioengineer"));
+		if (getBrowserDriver().isElementPresent(withCustomTimeout(byCssSelector(cssBioEngineeredDropDown), Timeout.FIVE_SECONDS_TIMEOUT)))
+			getBrowserDriver().selectDropDown(selectDropDownValue(byCssSelector(cssBioEngineeredDropDown), DROPDOWN.VISIBLETEXT.toString(), "bioengineer"));
 	}
 
 }

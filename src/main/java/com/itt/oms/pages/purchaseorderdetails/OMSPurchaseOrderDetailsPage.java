@@ -33,6 +33,10 @@ public class OMSPurchaseOrderDetailsPage {
     private static String idXdockDialog = "ModalContainerDivDialog";
     private static String xMONumber = "//div[@id='headerinfodiv']//font[contains(text(), 'PO Number')]/font";
     private static String idCustomerReferenceNumber = "conum";
+    private static String xTotalPrice = "//div[@id='totalsdiv']//font[text()='Total Price']/following-sibling::font";
+    private static String xTotalBrokerPrice = "//div[@id='totalsdiv']//font[text()='Total Broker Price']/following-sibling::font";
+    private static String xTotalQty = "//div[@id='totalsdiv']//font[text()='Total QTY']/following-sibling::font";
+    private static String xTotalBrokerQty = "//div[@id='totalsdiv']//font[text()='Total Broker QTY']/following-sibling::font";
 
 
 	public void submitPurchaseOrder(OMSDataModelHelperFactory omsDataModelHelperFactory) throws Exception {
@@ -124,5 +128,25 @@ public class OMSPurchaseOrderDetailsPage {
 	public String getCustomerReferenceNumber() throws Exception {
 		LOG.info("Get Customer reference Number");
 	    return getBrowserDriver().getAttributeValue(withAttributeName(byId(idCustomerReferenceNumber), "value"));
+	}
+
+	public String getTotalQuantity() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalQty));
+	}
+
+	public String getTotalBrokerQuantity() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalBrokerQty));
+	}
+
+	public String getTotalPrice() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalPrice));
+	}
+
+	public String getTotalBrokerPrice() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalBrokerPrice));
 	}
 }

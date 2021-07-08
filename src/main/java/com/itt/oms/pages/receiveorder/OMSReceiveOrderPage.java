@@ -2,6 +2,7 @@ package com.itt.oms.pages.receiveorder;
 
 import org.slf4j.LoggerFactory;
 
+import com.itt.common.Timeout;
 import com.itt.factoryhelper.BrowserHelperFactory.ALERT;
 import com.itt.oms.helper.OMSHelperFactory;
 
@@ -18,6 +19,7 @@ public class OMSReceiveOrderPage {
 	private static String cssPONumberlistedLink = "a[href*='receive_details']";
 	private static String cssSaveButton = "input[name='Save']";
 	private static String cssSubmitButton = "input[name^='MySubmit']";
+	private static String cssDuplicateButton = "input[name^='Duplicate']";
 	
 	
 	public void openReceiveOrderFromMenu() throws Exception {
@@ -54,6 +56,8 @@ public class OMSReceiveOrderPage {
 		this.clickSaveButton();
 		this.clickSaveButton();
 		
+		this.clickDuplicateButton();
+
 		try {
 			this.clickSubmitButton();
 		} catch(Exception e) {
@@ -75,5 +79,12 @@ public class OMSReceiveOrderPage {
 	public void clickSubmitButton() throws Exception {
 		LOG.info("Click on Submit Button");
 		getBrowserDriver().click(byCssSelector(cssSubmitButton));
+	}
+
+	public void clickDuplicateButton() throws Exception {
+		if (getBrowserDriver().isElementPresent(withCustomTimeout(byCssSelector(cssDuplicateButton), Timeout.FIVE_SECONDS_TIMEOUT))) {
+			LOG.info("Click on Duplicate Button");
+			getBrowserDriver().click(byCssSelector(cssDuplicateButton));
+		}
 	}
 }
