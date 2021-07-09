@@ -166,4 +166,5 @@ public class ItradeOrderNewOrderPage {
 		getBrowserDriver().click(withScroll(byXpath(xCreateButton)));	
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
+
 }

@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 
 import com.itt.common.Timeout;
 import com.itt.itradeorder.pages.ItradeOrderLoginPage;
+import com.itt.itradeorder.pages.ItradeOrderNewOrderPage;
 import com.itt.itradeorder.pages.ItradeOrderOrderDetailsPage;
 import com.itt.itradeorder.pages.ItradeOrderOrdersPage;
-import com.itt.itradeorder.pages.ItradeOrderNewOrderPage;
 
 import lombok.Getter;
 import lombok.Setter;

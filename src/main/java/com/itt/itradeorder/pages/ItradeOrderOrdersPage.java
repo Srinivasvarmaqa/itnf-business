@@ -25,6 +25,12 @@ public class ItradeOrderOrdersPage {
 	private static String cssSearchInputText = ".search-toolbar div.search-input > input";
 	private static String xSearchButton = "//span[@class='itn-icon-search']";
 	private static String xSearchInput = "//input[@placeholder='Search']";
+	private static String xNewOrdersCount = "//div[contains(text(), 'New')]/following-sibling::div";
+	private static String xAllOrdersCount = "//div[contains(text(), 'All')]/following-sibling::div";
+	private static String xUpdatesCount = "//div[contains(text(), 'Updates')]/following-sibling::div";
+	private static String xAlertsCount = "//div[contains(text(), 'Alerts')]/following-sibling::div";
+	private static String xCommentsCount = "//div[contains(text(), 'Comments')]/following-sibling::div";
+	private static String xInProgressCount = "//div[contains(text(), 'In Progress')]/following-sibling::div";
 
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
@@ -35,7 +41,6 @@ public class ItradeOrderOrdersPage {
 	}
 	
 	public void RefreshPO(String poNumber) throws Exception {
-		LOG.info("Look for PO Number:" + poNumber);
 		getBrowserDriver().sendValue(withText(withClearOption(byCssSelector(cssSearchInputText), true), poNumber));
 	}
 
@@ -45,9 +50,39 @@ public class ItradeOrderOrdersPage {
 	}
 
 	public void searchPOOrder(String ponumber) throws Exception {
-		LOG.info("Click on Search Button");
+		LOG.debug("Click on Search Button");
 		getBrowserDriver().click(byXpath(xSearchButton));
-		LOG.info("Enter PO Number");
+		LOG.debug("Enter PO Number");
 		getBrowserDriver().sendValue(withText(byXpath(xSearchInput),ponumber));
+	}
+	
+	public Integer getAllOrdersCount() throws Exception {
+		LOG.info("Get All Orders Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xAllOrdersCount)).trim());
+	}
+	
+	public Integer getNewOrdersCount() throws Exception {
+		LOG.info("Get New Orders Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xNewOrdersCount)).trim());
+	}
+	
+	public Integer getAlertsCount() throws Exception {
+		LOG.info("Get Alerts Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xAlertsCount)).trim());
+	}
+	
+	public Integer getCommentsCount() throws Exception {
+		LOG.info("Get Comments Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xCommentsCount)).trim());
+	}
+	
+	public Integer getInProgressCount() throws Exception {
+		LOG.info("Get InProgress Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xInProgressCount)).trim());
+	}
+	
+	public Integer getUpdatesCount() throws Exception {
+		LOG.info("Get Updates Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xUpdatesCount)).trim());
 	}
 }

@@ -35,6 +35,10 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xAcceptButton = "//span[contains(text(),'Accept')]";
 	private static String xUpdateButton = "//span[contains(text(),'Update')]";
 	private static String cssItemSize = ".flex-layout-table-body-inner div.flex-layout-table-row[fxlayout='row']";
+	private static String xItemsCount = "//itn-file-card//div[@class='left-col']//div[contains(text(), 'ITEMS')]/following-sibling::div";
+	private static String xChargesCount = "//itn-file-card//div[@class='left-col']//div[contains(text(), 'CHARGES')]/following-sibling::div";
+	private static String xHistoryCount = "//itn-file-card//div[@class='left-col']//div[contains(text(), 'HISTORY')]/following-sibling::div";
+	private static String xCasesCount = "//div[@class='units-badge']/div[contains(text(), 'Cases')]/following-sibling::div[@class='value']";
 	
 	public boolean isAddItemExists() throws Exception {
 		return getBrowserDriver().isElementPresent(byName(nAddProduct));
@@ -153,6 +157,7 @@ public class ItradeOrderOrderDetailsPage {
 	public void clickOnOrderDetailPageCrossIcon() throws Exception {
 		LOG.debug("Click on side navigationclose button");
 		getBrowserDriver().click(byCssSelector(cssOrderDetailCrossButtonSideNavigator));
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
 	
 	public void updateProductItem(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
@@ -195,5 +200,71 @@ public class ItradeOrderOrderDetailsPage {
 		clickOnSideNavCrossIcon();
 		clickOnAcceptButton();
 	}
-
+	
+	public Integer getPOItemsCount() throws Exception {
+		LOG.info("Get PO Items Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xItemsCount)).trim());
+	}
+	
+	public Integer getPOChargesCount() throws Exception {
+		LOG.info("Get PO charges Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xChargesCount)).trim());
+	}
+	
+	public Integer getPOHistoryCount() throws Exception {
+		LOG.info("Get PO history Count");	
+		return Integer.parseInt(getBrowserDriver().getText(byXpath(xHistoryCount)).trim());
+	}
+	
+	public Integer getAllItemlineCount() throws Exception {
+		LOG.info("Get All Item line Count");	
+		return getBrowserDriver().findElements(byCssSelector(cssItemSize)).size();
+	}
+	
+	public Double getPOCasesCount() throws Exception {
+		LOG.info("Get PO Item cases Count");
+		return Double.parseDouble(getBrowserDriver().getText(byXpath(xCasesCount)).trim());
+	}
+	
+	public Boolean verifyPOItemCount() throws Exception {
+		LOG.info("Verify Po Items count");	
+		Integer POItemsCount = this.getPOItemsCount();
+		Integer AllItemLineCount = this.getAllItemlineCount();
+		if (POItemsCount == AllItemLineCount - 1) {
+			return true;
+		}		
+		else {
+			return false;
+		}	
+	}
+	
+	public Boolean verifyPOItemHistoryCount() throws Exception {
+		LOG.info("Verify Po Items History count");	
+		Integer POItemsHistoryCount = this.getPOHistoryCount();
+		Integer AllItemLineCount = this.getAllItemlineCount();
+		if (POItemsHistoryCount == AllItemLineCount - 1) {
+			return true;
+		}		
+		else {
+			return false;
+		}	
+	}
+	
+	public boolean verifyPOItemsCasesCount() throws Exception {
+		LOG.info("Verify Po Items History count");	
+		String idQuantity;
+		Double quantityCount = 0.0;
+		int i = getBrowserDriver().findElements(byCssSelector(cssItemSize)).size();
+		for(int j=1 ; j<i; j++)
+		{
+			idQuantity = "quantity" + j;
+			quantityCount += Double.parseDouble(getBrowserDriver().getText(byXpath(idQuantity)).trim());			
+		}
+		if (this.getPOCasesCount() == quantityCount) {
+			return true;
+		}		
+		else {
+			return false;
+		}
+	}
 }
