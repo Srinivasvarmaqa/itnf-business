@@ -1,6 +1,7 @@
 package com.itt.itradeorder.helper;
 
 import static com.itt.browser.common.BrowserLocator.byCssSelector;
+import static com.itt.browser.common.BrowserLocator.byName;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
 import static com.itt.browser.common.BrowserLocator.withWaitForVisibility;
@@ -36,6 +37,7 @@ public class ItradeOrderHelperFactory {
 	private static String xCloseFeedbackMessage = "//div[@class='cdk-overlay-container']//span[contains(text(), 'CLOSE')]";
 	private static String cssFeedbackMessage = "div.cdk-overlay-container div.sb-text";
 	private static String cssOKConfirmationDialogButton = ".mat-dialog-container > confirm-dialog .action-primary";
+	private static String iDUserName = "username";
 	
 	@Getter
 	@Setter
@@ -60,10 +62,12 @@ public class ItradeOrderHelperFactory {
 	public void logout() throws Exception {
 		LOG.info("LOGOUT FROM ItradeOrder");
 		try {
+			getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssUserMenuArrowButton), Timeout.THREE_SECONDS_TIMEOUT));
 			getBrowserDriver().click(byCssSelector(cssUserMenuArrowButton));
 			getBrowserDriver().click(byXpath(xLogoutButton));
+			getBrowserDriver().waitForElement(byName(iDUserName));
 		} catch (Exception e) {
-			LOG.debug("Logout element is not found, might have already logged out");
+			LOG.debug("Logout element is not found, might have already logged out, retrying ..");
 		}
 	}
 

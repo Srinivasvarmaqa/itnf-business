@@ -39,6 +39,7 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xChargesCount = "//itn-file-card//div[@class='left-col']//div[contains(text(), 'CHARGES')]/following-sibling::div";
 	private static String xHistoryCount = "//itn-file-card//div[@class='left-col']//div[contains(text(), 'HISTORY')]/following-sibling::div";
 	private static String xCasesCount = "//div[@class='units-badge']/div[contains(text(), 'Cases')]/following-sibling::div[@class='value']";
+	private static String xTotalPOCost = "//div[@class='footer-content']/itn-panel-button//div[text()='Total PO Cost']/following-sibling::div";
 	
 	public boolean isAddItemExists() throws Exception {
 		return getBrowserDriver().isElementPresent(byName(nAddProduct));
@@ -131,7 +132,7 @@ public class ItradeOrderOrderDetailsPage {
 	public String getPOStatus() throws Exception {
 		LOG.debug("Get the PO Status");
 		int i = 0;
-		while(getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == "--" && i<=5) {
+		while(getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == "--" && i<=10) {
 			Thread.sleep(1000);
 			i++;
 		}
@@ -266,5 +267,10 @@ public class ItradeOrderOrderDetailsPage {
 		else {
 			return false;
 		}
+	}
+	    
+	public String getTotalPOCost() throws Exception {
+		LOG.info("Get PO Total Cost");
+		return getBrowserDriver().getText(byXpath(xTotalPOCost)).trim();
 	}
 }
