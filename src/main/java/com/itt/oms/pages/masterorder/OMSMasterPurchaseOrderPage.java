@@ -54,7 +54,7 @@ public class OMSMasterPurchaseOrderPage {
 	}
 	
 	public boolean isCreateMoTabPresent() throws Exception{
-		return getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssCreateMO), Timeout.FIFTEEN_SECONDS_TIMEOUT));
+		return getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssCreateMO), Timeout.THIRTY_SECONDS_TIMEOUT));
 	}
 
 	public void createMasterPurchaseOrder(OMSDataModelHelperFactory omsDataModelHelperFactory) throws Exception {
