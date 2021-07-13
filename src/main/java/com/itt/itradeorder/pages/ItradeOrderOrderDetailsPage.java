@@ -5,6 +5,7 @@ import static com.itt.browser.common.BrowserLocator.byId;
 import static com.itt.browser.common.BrowserLocator.byName;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.withClearOption;
+import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
 import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.itt.common.Timeout;
 import com.itt.itradeorder.datamodelhelper.ItradeOrderDataModelHelperFactory;
 import com.itt.itradeorder.datamodelhelper.ItradeOrderDataModelProducts;
 import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
@@ -26,7 +28,7 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xSubmitButton = "//span[contains(text(),'Submit')]";
 	private static String xCancelButton = "//span[contains(text(),'Cancel')]";
 	private static String cssPONumber = ".itn-jumbo-card .primary-color";
-	private static String cssSearchCrossButton = "div.icon-container.itn-icon-close-x";
+	private static String cssSearchCrossButton = "div.icon-container.itn-icon-close-x[fxlayout='row']";
 	private static String cssSearchCrossButtonSideNavigator = ".sidenav-header .itn-icon-close-x";
 	private static String cssOrderDetailCrossButtonSideNavigator = ".black .itn-icon-close-x";
 	private static String cssPOStatus = ".itn-jumbo-card .status-badge";
@@ -39,7 +41,10 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xChargesCount = "//itn-file-card//div[@class='left-col']//div[contains(text(), 'CHARGES')]/following-sibling::div";
 	private static String xHistoryCount = "//itn-file-card//div[@class='left-col']//div[contains(text(), 'HISTORY')]/following-sibling::div";
 	private static String xCasesCount = "//div[@class='units-badge']/div[contains(text(), 'Cases')]/following-sibling::div[@class='value']";
-	private static String xTotalPOCost = "//div[@class='footer-content']/itn-panel-button//div[text()='Total PO Cost']/following-sibling::div";
+	private static String xAddCharges = "//span[contains(text(), 'Add Charges')]";
+	private static String xEditCharges = "//span[contains(text(), 'Edit Charges')]";
+	private static String xAddCharge = "span.itn-icon-plus.add-item-btn-icon";
+	private static String xDoneWithCharges = "//span[contains(text(), 'DONE WITH CHARGES')]";
 	
 	public boolean isAddItemExists() throws Exception {
 		return getBrowserDriver().isElementPresent(byName(nAddProduct));
@@ -96,6 +101,46 @@ public class ItradeOrderOrderDetailsPage {
 		}
 		this.clickOnSubmitButton();
 	}
+	
+	public void addProductsWithCharges(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory)
+			throws Exception {
+		LOG.info("Add Product");
+		List<ItradeOrderDataModelProducts> products;
+
+		if (user.equals(USER.BUYER)) {
+			products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyeraddproducts();
+		} else if (user.equals(USER.VENDOR)) {
+			products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendoraddproducts();
+		} else {
+			throw new Exception("Incorrect user" + user.toString());
+		}
+		if (products != null) {
+			int i = getBrowserDriver().findElements(byCssSelector(cssItemSize)).size();
+			String productName;
+			String xProductDropDown;
+			String idPrice;
+			String idQuantity;
+			for (ItradeOrderDataModelProducts product : products) {
+				LOG.debug("Add product");
+				productName = product.getName();
+				getBrowserDriver().sendValue(withText(byName(nAddProduct), productName));
+				xProductDropDown = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]",productName);
+				getBrowserDriver().click(byXpath(xProductDropDown));
+
+				LOG.debug("Enter Quantity");
+				idQuantity = "quantity" + i;
+				getBrowserDriver().sendValue(withText(byId(idQuantity), Integer.toString(product.getQuantity())));
+
+				LOG.debug("Enter Price");
+				idPrice = "price" + i;
+				getBrowserDriver().sendValue(withText(byId(idPrice), Double.toString(product.getPrice())));
+
+				i++;
+			}
+		}
+		this.addLinelevelCharges(user, itradeOrderDataModelHelperFactory);
+		this.clickOnSubmitButton();
+	}
 
 	public void clickOnSubmitButton() throws Exception {
 		LOG.debug("Click on Submit Button");
@@ -109,6 +154,8 @@ public class ItradeOrderOrderDetailsPage {
 
 	public void clickOnSearchCloseButton() throws Exception {
 		LOG.debug("Click on Search close button");
+		getBrowserDriver().waitForElement(byCssSelector(cssSearchCrossButton));
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byCssSelector(cssSearchCrossButton));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
@@ -268,9 +315,75 @@ public class ItradeOrderOrderDetailsPage {
 			return false;
 		}
 	}
-	    
-	public String getTotalPOCost() throws Exception {
-		LOG.info("Get PO Total Cost");
-		return getBrowserDriver().getText(byXpath(xTotalPOCost)).trim();
+
+	public void addLinelevelCharges(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
+		LOG.info("Add line level charges");
+		List<ItradeOrderDataModelProducts> charges;
+		if (user.equals(USER.BUYER)) {
+			charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyerlinelevelcharges();
+		} else if (user.equals(USER.VENDOR)) {
+			charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendorlinelevelcharges();
+		} else {
+			throw new Exception("Incorrect user" + user.toString());
+		}
+		if (charges != null) {
+			for (ItradeOrderDataModelProducts charge : charges) {
+				if (charge.getChargetype() != null && charge.getCalculationtype() != null && charge.getAmount() != 0.0) {
+					LOG.debug("Add charges");
+					String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]",charge.getName());
+					getBrowserDriver().click(byXpath(xClickDot));
+					getBrowserDriver().click(byXpath(xAddCharges));
+					getBrowserDriver().waitForElement(withCustomTimeout(byXpath(xAddCharge), Timeout.FIVE_SECONDS_TIMEOUT));
+					getBrowserDriver().click(byCssSelector(xAddCharge));
+
+					String xChargeType = String.format("//mat-select[@id='chargeType_%s']", charges.size() - 1);
+					getBrowserDriver().click(byXpath(xChargeType));
+
+					String xChargeTypeValue = String.format("//span[contains(text(), '%s')]", charge.getChargetype());
+					getBrowserDriver().click(byXpath(xChargeTypeValue));
+
+					String xCalcType = String.format("//mat-select[@id='charge_%s']", charges.size() - 1);
+					getBrowserDriver().click(byXpath(xCalcType));
+
+					String xCalcTypeValue = String.format("//span[contains(text(), '%s')]",charge.getCalculationtype());
+					getBrowserDriver().click(byXpath(xCalcTypeValue));
+
+					String xChargeAmount = String.format("//label[@aria-owns='chargeType_%s']/ancestor::div[contains(@class,'flex-layout-table-row')]//input[@name='calcValue']",charges.size() - 1);
+					getBrowserDriver().sendValue(withText(byXpath(xChargeAmount), Double.toString(charge.getAmount())));
+					getBrowserDriver().click(byXpath(xDoneWithCharges));
+				}
+			}
+		}
 	}
+	
+			public Boolean isAddChargesButtonEnabled(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
+				LOG.info("Get Add charges status");
+				Boolean isAddCharge = true;
+				List<ItradeOrderDataModelProducts> charges;
+				if (user.equals(USER.BUYER)) {
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyerlinelevelcharges();
+				} else if (user.equals(USER.VENDOR)) {
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendorlinelevelcharges();
+				} else {
+					throw new Exception("Incorrect user" + user.toString());
+				}
+				if (charges != null) {
+					for (ItradeOrderDataModelProducts charge : charges) {
+						if (charge.getChargetype() != null && charge.getCalculationtype() != null
+								&& charge.getAmount() != 0.0) {
+							LOG.debug("Is Add charges Enabled");
+							String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", charge.getName());
+							getBrowserDriver().click(byXpath(xClickDot));
+							isAddCharge = getBrowserDriver().isElementPresent(byXpath(xAddCharges));
+							getBrowserDriver().click(byXpath(xEditCharges));
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
+							getBrowserDriver().click(byXpath(xDoneWithCharges));
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
+							clickOnOrderDetailPageCrossIcon();
+						}
+						break;
+					}
+				}
+				return isAddCharge;
+			}
 }

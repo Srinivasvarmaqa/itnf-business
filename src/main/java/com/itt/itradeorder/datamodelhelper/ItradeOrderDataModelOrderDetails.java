@@ -14,4 +14,8 @@ public class ItradeOrderDataModelOrderDetails {
 	List<ItradeOrderDataModelProducts> vendoraddproducts;
 	List<ItradeOrderDataModelProducts> buyerupdateproducts;
 	List<ItradeOrderDataModelProducts> vendorupdateproducts;
+	List<ItradeOrderDataModelProducts> buyerlinelevelcharges;
+	List<ItradeOrderDataModelProducts> buyerorderlevelcharges;
+	List<ItradeOrderDataModelProducts> vendorlinelevelcharges;
+	List<ItradeOrderDataModelProducts> vendororderlevelcharges;
 }

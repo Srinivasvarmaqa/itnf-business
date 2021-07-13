@@ -62,7 +62,8 @@ public class ItradeOrderHelperFactory {
 	public void logout() throws Exception {
 		LOG.info("LOGOUT FROM ItradeOrder");
 		try {
-			getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssUserMenuArrowButton), Timeout.THREE_SECONDS_TIMEOUT));
+			getBrowserDriver().waitForElement(byCssSelector(cssUserMenuArrowButton));
+			ItradeOrderHelperFactory.waitForloaderToDisapper();
 			getBrowserDriver().click(byCssSelector(cssUserMenuArrowButton));
 			getBrowserDriver().click(byXpath(xLogoutButton));
 			getBrowserDriver().waitForElement(byName(iDUserName));

@@ -12,4 +12,7 @@ public class ItradeOrderDataModelProducts {
 	private int quantity;
 	private double price;
 	private String name;
+	private String chargetype;
+	private String calculationtype;
+	private Double amount;
 }
