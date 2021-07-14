@@ -43,6 +43,7 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xCasesCount = "//div[@class='units-badge']/div[contains(text(), 'Cases')]/following-sibling::div[@class='value']";
 	private static String xAddCharges = "//span[contains(text(), 'Add Charges')]";
 	private static String xEditCharges = "//span[contains(text(), 'Edit Charges')]";
+	private static String xViewCharges = "//span[contains(text(), 'View Charges')]";
 	private static String xAddCharge = "span.itn-icon-plus.add-item-btn-icon";
 	private static String xDoneWithCharges = "//span[contains(text(), 'DONE WITH CHARGES')]";
 	
@@ -380,6 +381,68 @@ public class ItradeOrderOrderDetailsPage {
 							getBrowserDriver().click(byXpath(xDoneWithCharges));
 							ItradeOrderHelperFactory.waitForloaderToDisapper();
 							clickOnOrderDetailPageCrossIcon();
+						}
+						break;
+					}
+				}
+				return isAddCharge;
+			}
+			
+			public Boolean isViewChargesEnabledAfterShipPO(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
+				LOG.info("Get view charges status");
+				Boolean isViewCharge = true;
+				List<ItradeOrderDataModelProducts> charges;
+				if (user.equals(USER.BUYER)) {
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyerlinelevelcharges();
+				} else if (user.equals(USER.VENDOR)) {
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendorlinelevelcharges();
+				} else {
+					throw new Exception("Incorrect user" + user.toString());
+				}
+				if (charges != null) {
+					for (ItradeOrderDataModelProducts charge : charges) {
+						if (charge.getChargetype() != null && charge.getCalculationtype() != null
+								&& charge.getAmount() != 0.0) {
+							LOG.debug("Is Add charges Enabled");
+							String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", charge.getName());
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
+							getBrowserDriver().click(byXpath(xClickDot));
+							isViewCharge = getBrowserDriver().isElementPresent(byXpath(xViewCharges));
+							getBrowserDriver().click(byXpath(xViewCharges));
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
+							getBrowserDriver().click(byXpath(xDoneWithCharges));
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
+						}
+						break;
+					}
+				}
+				return isViewCharge;
+			}
+			
+			public Boolean isAddChargesDisabledAfterShipPO(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
+				LOG.info("Get view charges status");
+				Boolean isAddCharge = true;
+				List<ItradeOrderDataModelProducts> charges;
+				if (user.equals(USER.BUYER)) {
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyerlinelevelcharges();
+				} else if (user.equals(USER.VENDOR)) {
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendorlinelevelcharges();
+				} else {
+					throw new Exception("Incorrect user" + user.toString());
+				}
+				if (charges != null) {
+					for (ItradeOrderDataModelProducts charge : charges) {
+						if (charge.getChargetype() != null && charge.getCalculationtype() != null
+								&& charge.getAmount() != 0.0) {
+							LOG.debug("Is Add charges Enabled");
+							String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", charge.getName());
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
+							getBrowserDriver().click(byXpath(xClickDot));
+							isAddCharge = getBrowserDriver().isElementPresent(byXpath(xAddCharges));
+							getBrowserDriver().click(byXpath(xViewCharges));
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
+							getBrowserDriver().click(byXpath(xDoneWithCharges));
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
 						}
 						break;
 					}

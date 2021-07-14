@@ -19,6 +19,7 @@ import com.itt.itradeorder.pages.ItradeOrderLoginPage;
 import com.itt.itradeorder.pages.ItradeOrderNewOrderPage;
 import com.itt.itradeorder.pages.ItradeOrderOrderDetailsPage;
 import com.itt.itradeorder.pages.ItradeOrderOrdersPage;
+import com.itt.itradeorder.pages.ItradeOrderShippingPage;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,12 +33,14 @@ public class ItradeOrderHelperFactory {
 	private ItradeOrderNewOrderPage itradeOrderNewOrderPage = new ItradeOrderNewOrderPage();
 	private ItradeOrderOrderDetailsPage itradeOrderOrderDetailsPage = new ItradeOrderOrderDetailsPage();
 	private ItradeOrderOrdersPage itradeOrderOrdersPage = new ItradeOrderOrdersPage();
+	private ItradeOrderShippingPage itradeOrderShippingPage = new ItradeOrderShippingPage();
 	private static final String cssUserMenuArrowButton = "button.btn-user-menu.mat-icon-button";
 	private static final String xLogoutButton = "//span[contains(@class, 'itn-icon-logout')]/following-sibling::span[contains(text(), 'Logout')]";
 	private static String xCloseFeedbackMessage = "//div[@class='cdk-overlay-container']//span[contains(text(), 'CLOSE')]";
 	private static String cssFeedbackMessage = "div.cdk-overlay-container div.sb-text";
 	private static String cssOKConfirmationDialogButton = ".mat-dialog-container > confirm-dialog .action-primary";
 	private static String iDUserName = "username";
+	private static String xClickBlank = "//html";
 	
 	@Getter
 	@Setter
@@ -58,9 +61,14 @@ public class ItradeOrderHelperFactory {
 	public ItradeOrderOrdersPage getItradeOrderOrdersPage() {
 		return this.itradeOrderOrdersPage;
 	}
+	
+	public ItradeOrderShippingPage getItradeOrderShippingPage() {
+		return this.itradeOrderShippingPage;
+	}
 
 	public void logout() throws Exception {
 		LOG.info("LOGOUT FROM ItradeOrder");
+		Thread.sleep(3000);
 		try {
 			getBrowserDriver().waitForElement(byCssSelector(cssUserMenuArrowButton));
 			ItradeOrderHelperFactory.waitForloaderToDisapper();
@@ -103,5 +111,9 @@ public class ItradeOrderHelperFactory {
 	public static void clickOnOkConfirmationDialogButton() throws Exception {
 		LOG.debug("Click on OK confirmation dialog");
 		getBrowserDriver().click(byCssSelector(cssOKConfirmationDialogButton));
+	}
+	
+	public static void clickOnBlankArea() throws Exception {
+		getBrowserDriver().click(byXpath(xClickBlank));
 	}
 }
