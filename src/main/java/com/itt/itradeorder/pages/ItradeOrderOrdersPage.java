@@ -54,6 +54,7 @@ public class ItradeOrderOrdersPage {
 	
 	public Integer getAllOrdersCount() throws Exception {
 		LOG.info("Get All Orders Count");	
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xAllOrdersCount)).trim());
 	}
 	

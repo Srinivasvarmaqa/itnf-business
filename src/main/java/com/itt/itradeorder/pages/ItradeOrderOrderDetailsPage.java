@@ -100,7 +100,15 @@ public class ItradeOrderOrderDetailsPage {
 				i++;
 			}
 		}
-		this.clickOnSubmitButton();
+		if (user.equals(USER.BUYER)) {
+			LOG.info("Click on Submit button");
+			getBrowserDriver().click(byXpath(xSubmitButton));
+		} else if (user.equals(USER.VENDOR)) {
+			LOG.info("Click on Update button");
+			getBrowserDriver().click(byXpath(xUpdateButton));
+		} else {
+			throw new Exception("Incorrect user" + user.toString());
+		}
 	}
 	
 	public void addProductsWithCharges(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory)
