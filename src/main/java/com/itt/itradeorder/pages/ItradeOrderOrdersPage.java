@@ -85,6 +85,7 @@ public class ItradeOrderOrdersPage {
 	
 	public void clickOnOrdersPage() throws Exception {
 		LOG.debug("Click on Orders Page");
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byCssSelector(cssOrdersPage));
 		ItradeOrderHelperFactory.clickOnBlankArea();
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
