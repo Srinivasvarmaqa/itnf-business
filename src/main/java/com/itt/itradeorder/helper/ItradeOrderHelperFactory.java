@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.itt.common.Timeout;
+import com.itt.itradeorder.pages.ItradeOrderDashboardPage;
 import com.itt.itradeorder.pages.ItradeOrderLoginPage;
 import com.itt.itradeorder.pages.ItradeOrderNewOrderPage;
 import com.itt.itradeorder.pages.ItradeOrderOrderDetailsPage;
@@ -34,6 +35,7 @@ public class ItradeOrderHelperFactory {
 	private ItradeOrderOrderDetailsPage itradeOrderOrderDetailsPage = new ItradeOrderOrderDetailsPage();
 	private ItradeOrderOrdersPage itradeOrderOrdersPage = new ItradeOrderOrdersPage();
 	private ItradeOrderShippingPage itradeOrderShippingPage = new ItradeOrderShippingPage();
+	private ItradeOrderDashboardPage itradeOrderDashboardPage = new ItradeOrderDashboardPage();
 	private static final String cssUserMenuArrowButton = "button.btn-user-menu.mat-icon-button";
 	private static final String xLogoutButton = "//span[contains(@class, 'itn-icon-logout')]/following-sibling::span[contains(text(), 'Logout')]";
 	private static String xCloseFeedbackMessage = "//div[@class='cdk-overlay-container']//span[contains(text(), 'CLOSE')]";
@@ -64,6 +66,10 @@ public class ItradeOrderHelperFactory {
 	
 	public ItradeOrderShippingPage getItradeOrderShippingPage() {
 		return this.itradeOrderShippingPage;
+	}
+	
+	public ItradeOrderDashboardPage getItradeOrderDashboardPage() {
+		return this.itradeOrderDashboardPage;
 	}
 
 	public void logout() throws Exception {

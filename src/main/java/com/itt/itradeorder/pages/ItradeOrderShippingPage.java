@@ -4,7 +4,6 @@ import static com.itt.browser.common.BrowserLocator.byCssSelector;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
-import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
