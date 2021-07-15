@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.itt.oms.helper.OMSHelperFactory;
+import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 
 public class ITTBusinessHelperFactory {
 
@@ -11,6 +12,7 @@ public class ITTBusinessHelperFactory {
 
 	private static ITTBusinessHelperFactory ittBusinessHelperFactory = new ITTBusinessHelperFactory();
 	private OMSHelperFactory oMSHelperFactory = new OMSHelperFactory();
+	private ItradeOrderHelperFactory itradeOrderHelperFactory = new ItradeOrderHelperFactory();
 
 	private ITTBusinessHelperFactory() { }
 
@@ -20,5 +22,9 @@ public class ITTBusinessHelperFactory {
 
 	public OMSHelperFactory getOMSHelperFactory() {
 		return this.oMSHelperFactory;
+	}
+	
+	public ItradeOrderHelperFactory getItradeOrderHelperFactory() {
+		return this.itradeOrderHelperFactory;
 	}
 }
