@@ -28,6 +28,7 @@ public class ItradeOrderNewOrderPage {
 	
 	public void openNewOrder() throws Exception {
 		LOG.info("Click on New Order");
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byName(nNewOrder));
 	}
 
