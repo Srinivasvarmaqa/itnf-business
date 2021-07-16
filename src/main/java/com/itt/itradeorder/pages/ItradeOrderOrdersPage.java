@@ -23,7 +23,7 @@ public class ItradeOrderOrdersPage {
 	private static String xAlertsCount = "//div[contains(text(), 'Alerts')]/following-sibling::div";
 	private static String xCommentsCount = "//div[contains(text(), 'Comments')]/following-sibling::div";
 	private static String xInProgressCount = "//div[contains(text(), 'In Progress')]/following-sibling::div";
-	private static String cssOrdersPage = "span.mi-icon.itn-icon-order";
+	private static String cssOrdersPage = "div.menu-item.ng-star-inserted span.mi-icon.itn-icon-order";
 
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
@@ -60,6 +60,7 @@ public class ItradeOrderOrdersPage {
 	
 	public Integer getNewOrdersCount() throws Exception {
 		LOG.info("Get New Orders Count");	
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xNewOrdersCount)).trim());
 	}
 	
@@ -85,6 +86,7 @@ public class ItradeOrderOrdersPage {
 	
 	public void clickOnOrdersPage() throws Exception {
 		LOG.debug("Click on Orders Page");
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byCssSelector(cssOrdersPage));
 		ItradeOrderHelperFactory.clickOnBlankArea();
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
