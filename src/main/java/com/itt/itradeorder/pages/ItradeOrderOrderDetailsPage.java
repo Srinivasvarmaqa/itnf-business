@@ -197,6 +197,7 @@ public class ItradeOrderOrderDetailsPage {
 	
 	public void clickonBell() throws Exception {
 		LOG.info("Click on Bell Button");
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byXpath(xBellButton));
 	}
 	
