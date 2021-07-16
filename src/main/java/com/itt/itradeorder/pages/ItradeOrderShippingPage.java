@@ -17,7 +17,7 @@ public class ItradeOrderShippingPage {
 	private static String xShippingTommorowCount = "//div[contains(text(), 'Shipping Tomorrow')]/following-sibling::div";
 	private static String xInTransitCount = "//div[contains(text(), 'In Transit')]/following-sibling::div";
 	private static String xAllShippingCount = "//div[contains(text(), 'All')]/following-sibling::div";
-	private static String cssShippingPage = "span.mi-icon.itn-icon-shipping-wh";
+	private static String cssShippingPage = "div.menu-item.ng-star-inserted span.mi-icon.itn-icon-shipping-wh";
 	private static String cssClickOnShip = "button.action-primary[type='submit']";;
 	
 	
@@ -56,10 +56,9 @@ public class ItradeOrderShippingPage {
 	public void clickOnShippingPage() throws Exception {
 		LOG.debug("Click on Shipping Page");
 		getBrowserDriver().click(byCssSelector(cssShippingPage));
-		ItradeOrderHelperFactory.clickOnBlankArea();
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
-	
+
 	public void clickOnShipPO() throws Exception {
 		LOG.debug("Click on Ship PO");
 		getBrowserDriver().click(byCssSelector(cssClickOnShip));

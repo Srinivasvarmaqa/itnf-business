@@ -42,7 +42,7 @@ public class ItradeOrderHelperFactory {
 	private static String cssFeedbackMessage = "div.cdk-overlay-container div.sb-text";
 	private static String cssOKConfirmationDialogButton = ".mat-dialog-container > confirm-dialog .action-primary";
 	private static String iDUserName = "username";
-	private static String xClickBlank = "//html";
+	private static String xClickBlank = "//body";
 	
 	@Getter
 	@Setter

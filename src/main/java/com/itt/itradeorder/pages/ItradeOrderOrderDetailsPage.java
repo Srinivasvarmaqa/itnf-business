@@ -46,6 +46,8 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xViewCharges = "//span[contains(text(), 'View Charges')]";
 	private static String xAddCharge = "span.itn-icon-plus.add-item-btn-icon";
 	private static String xDoneWithCharges = "//span[contains(text(), 'DONE WITH CHARGES')]";
+	private static String xTotalPOCost = "//div[@class='footer-content']/itn-panel-button//div[text()='Total PO Cost']/following-sibling::div";
+	private static String xLineItemTotalCharge = "//div[text()='Total']/following-sibling::div";
 	
 	public boolean isAddItemExists() throws Exception {
 		return getBrowserDriver().isElementPresent(byName(nAddProduct));
@@ -172,6 +174,7 @@ public class ItradeOrderOrderDetailsPage {
 	public void clickOnSideNavCrossIcon() throws Exception {
 		LOG.debug("Click on side navigationclose button");
 		getBrowserDriver().click(byCssSelector(cssSearchCrossButtonSideNavigator));
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
 
 	public void clickOnCancelButton() throws Exception {
@@ -391,7 +394,6 @@ public class ItradeOrderOrderDetailsPage {
 							ItradeOrderHelperFactory.waitForloaderToDisapper();
 							getBrowserDriver().click(byXpath(xDoneWithCharges));
 							ItradeOrderHelperFactory.waitForloaderToDisapper();
-							clickOnOrderDetailPageCrossIcon();
 						}
 						break;
 					}
@@ -459,5 +461,46 @@ public class ItradeOrderOrderDetailsPage {
 					}
 				}
 				return isAddCharge;
+			}
+
+			public Boolean verifyTotalPOCost(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
+				LOG.info("Get PO Total Cost");
+				String TotalPoCost1 = getBrowserDriver().getText(byXpath(xTotalPOCost)).trim();
+				Double TotalPoCost = Double.parseDouble(TotalPoCost1.replaceAll("[^\\d.]", ""));
+				LOG.info("Get Total Price");
+				Double TotalPrice = 0.0;
+				List<ItradeOrderDataModelProducts> products;
+				if (user.equals(USER.BUYER)) {
+					products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyeraddproducts();
+				} else if (user.equals(USER.VENDOR)) {
+					products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendoraddproducts();
+				} else {
+					throw new Exception("Incorrect user" + user.toString());
+				}
+				if (products != null) {
+					for (ItradeOrderDataModelProducts product: products) {
+						if (product.getName() != null && product.getPrice() != 0.0 && product.getQuantity() != 0) {
+							LOG.debug("Get Total Price of each item");
+							String xGetPrice = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span//span[contains(@class,'showProductDetail ng-star-inserted')]", product.getName());
+							String TotalPriceInCurrency = getBrowserDriver().getText(byXpath(xGetPrice)).trim();
+							TotalPrice += Double.parseDouble(TotalPriceInCurrency.replaceAll("[^\\d.]", ""));
+							String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", product.getName());
+							getBrowserDriver().click(byXpath(xClickDot));
+							if (getBrowserDriver().isElementPresent(byXpath(xEditCharges))) {
+								getBrowserDriver().click(byXpath(xEditCharges));
+								String LineItemTotalPoCost1 = getBrowserDriver().getText(byXpath(xLineItemTotalCharge)).trim();
+								TotalPrice += Double.parseDouble(LineItemTotalPoCost1.replaceAll("[^\\d.]", ""));
+								getBrowserDriver().click(byXpath(xDoneWithCharges));
+							}else {
+								ItradeOrderHelperFactory.clickOnBlankArea();
+							}
+						}
+					}
+				}
+				if (Double.compare(TotalPoCost, TotalPrice) == 0) {
+					return true;
+				}else {
+					return false;
+				}
 			}
 }
