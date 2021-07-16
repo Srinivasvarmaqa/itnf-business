@@ -286,6 +286,7 @@ public class ItradeOrderOrderDetailsPage {
 	
 	public Boolean verifyPOItemCount() throws Exception {
 		LOG.info("Verify Po Items count");	
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		Integer POItemsCount = this.getPOItemsCount();
 		Integer AllItemLineCount = this.getAllItemlineCount();
 		if (POItemsCount == AllItemLineCount - 1) {
@@ -297,7 +298,8 @@ public class ItradeOrderOrderDetailsPage {
 	}
 	
 	public Boolean verifyPOItemHistoryCount() throws Exception {
-		LOG.info("Verify Po Items History count");	
+		LOG.info("Verify Po Items History count");
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		Integer POItemsHistoryCount = this.getPOHistoryCount();
 		Integer AllItemLineCount = this.getAllItemlineCount();
 		if (POItemsHistoryCount == AllItemLineCount - 1) {
