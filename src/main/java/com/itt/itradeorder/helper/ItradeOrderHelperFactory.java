@@ -43,6 +43,7 @@ public class ItradeOrderHelperFactory {
 	private static String cssOKConfirmationDialogButton = ".mat-dialog-container > confirm-dialog .action-primary";
 	private static String iDUserName = "username";
 	private static String xClickBlank = "//body";
+	private static String cssLoader = "div.loader-overlay";
 	
 	@Getter
 	@Setter
@@ -74,9 +75,8 @@ public class ItradeOrderHelperFactory {
 
 	public void logout() throws Exception {
 		LOG.info("LOGOUT FROM ItradeOrder");
-		Thread.sleep(3000);
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		try {
-			getBrowserDriver().waitForElement(byCssSelector(cssUserMenuArrowButton));
 			ItradeOrderHelperFactory.waitForloaderToDisapper();
 			getBrowserDriver().click(byCssSelector(cssUserMenuArrowButton));
 			getBrowserDriver().click(byXpath(xLogoutButton));
@@ -93,7 +93,13 @@ public class ItradeOrderHelperFactory {
 	}
 
 	public static void waitForloaderToDisapper() throws Exception {
-		getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector("div.loader-overlay"), "false"));
+		int count = 0;
+		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssLoader), Timeout.TEN_SECONDS_TIMEOUT));
+		getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
+		while(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0 && count<20) {
+			Thread.sleep(1000);
+			count++;
+		}
 	}
 
 	public void closeFeedbackMessage() throws Exception {
@@ -120,6 +126,7 @@ public class ItradeOrderHelperFactory {
 	}
 	
 	public static void clickOnBlankArea() throws Exception {
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byXpath(xClickBlank));
 	}
 }

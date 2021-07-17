@@ -39,12 +39,14 @@ public class ItradeOrderShippingPage {
 	}
 	
 	public Integer getShipAllCount() throws Exception {
-		LOG.info("Get Ship Today Count");	
+		LOG.info("Get Ship Today Count");
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xAllShippingCount)).trim());
 	}
 	
 	public Integer getShipTransitCount() throws Exception {
-		LOG.info("Get Ship Transit Count");	
+		LOG.info("Get Ship Transit Count");
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xInTransitCount)).trim());
 	}
 	

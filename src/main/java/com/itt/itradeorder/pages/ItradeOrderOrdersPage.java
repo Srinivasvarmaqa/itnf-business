@@ -3,12 +3,14 @@ package com.itt.itradeorder.pages;
 import static com.itt.browser.common.BrowserLocator.byCssSelector;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.withClearOption;
+import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
 import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.itt.common.Timeout;
 import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 
 public class ItradeOrderOrdersPage {
@@ -27,10 +29,10 @@ public class ItradeOrderOrdersPage {
 
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
-		getBrowserDriver().waitForElement(byCssSelector(cssSearchButton));
+		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchButton),Timeout.FIVE_SECONDS_TIMEOUT));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byCssSelector(cssSearchButton));
-		getBrowserDriver().waitForElement(byCssSelector(cssSearchInputText));
+		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchInputText),Timeout.FIVE_SECONDS_TIMEOUT));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
 	}
