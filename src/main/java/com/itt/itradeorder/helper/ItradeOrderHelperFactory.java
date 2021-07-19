@@ -98,7 +98,6 @@ public class ItradeOrderHelperFactory {
 		getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
 		while(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0 && count<20) {
 			Thread.sleep(1000);
-			LOG.info("****WAITING 1 SECOND*************");
 			count++;
 		}
 	}
