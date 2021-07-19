@@ -91,6 +91,6 @@ public class ItradeOrderOrdersPage {
 		LOG.debug("Click on Orders Page");
 		getBrowserDriver().click(byCssSelector(cssOrdersPage));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		ItradeOrderHelperFactory.mouseOverToSomeElement();
+		ItradeOrderHelperFactory.mouseOverToLogoutArrow();
 	}
 }

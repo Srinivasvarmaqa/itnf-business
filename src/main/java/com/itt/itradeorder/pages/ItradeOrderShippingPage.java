@@ -60,7 +60,7 @@ public class ItradeOrderShippingPage {
 		LOG.debug("Click on Shipping Page");
 		getBrowserDriver().click(byXpath(xShippingPage));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		ItradeOrderHelperFactory.mouseOverToSomeElement();
+		ItradeOrderHelperFactory.mouseOverToLogoutArrow();
 	}
 
 	public void clickOnShipPO() throws Exception {

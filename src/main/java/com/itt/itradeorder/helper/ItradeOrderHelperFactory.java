@@ -130,7 +130,7 @@ public class ItradeOrderHelperFactory {
 		getBrowserDriver().click(byXpath(xClickBlank));
 	}
 
-	public static void mouseOverToSomeElement() throws Exception {
+	public static void mouseOverToLogoutArrow() throws Exception {
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().moveToElement(byCssSelector(cssUserMenuArrowButton));
 	}
