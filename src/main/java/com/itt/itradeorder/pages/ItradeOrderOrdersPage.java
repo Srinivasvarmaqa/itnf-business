@@ -3,14 +3,13 @@ package com.itt.itradeorder.pages;
 import static com.itt.browser.common.BrowserLocator.byCssSelector;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.withClearOption;
-import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
 import static com.itt.browser.common.BrowserLocator.withText;
+import static com.itt.browser.common.BrowserLocator.withWaitForVisibility;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.itt.common.Timeout;
 import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 
 public class ItradeOrderOrdersPage {
@@ -26,14 +25,18 @@ public class ItradeOrderOrdersPage {
 	private static String xCommentsCount = "//div[contains(text(), 'Comments')]/following-sibling::div";
 	private static String xInProgressCount = "//div[contains(text(), 'In Progress')]/following-sibling::div";
 	private static String cssOrdersPage = "div.menu-item.ng-star-inserted span.mi-icon.itn-icon-order";
-
+	private static String cssLoader = "div.loader-overlay";
+	
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchButton),Timeout.FIVE_SECONDS_TIMEOUT));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		getBrowserDriver().click(byCssSelector(cssSearchButton));
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchInputText),Timeout.FIVE_SECONDS_TIMEOUT));
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		try {
+			getBrowserDriver().click(byCssSelector(cssSearchButton));
+		} catch (Exception e) {
+			LOG.debug("Exception during click on search button due to page loading,retrying");
+			getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
+			getBrowserDriver().click(byCssSelector(cssSearchButton));
+		}
 		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
 	}
 	
@@ -56,13 +59,11 @@ public class ItradeOrderOrdersPage {
 	
 	public Integer getAllOrdersCount() throws Exception {
 		LOG.info("Get All Orders Count");	
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xAllOrdersCount)).trim());
 	}
 	
 	public Integer getNewOrdersCount() throws Exception {
 		LOG.info("Get New Orders Count");	
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xNewOrdersCount)).trim());
 	}
 	
@@ -88,9 +89,8 @@ public class ItradeOrderOrdersPage {
 	
 	public void clickOnOrdersPage() throws Exception {
 		LOG.debug("Click on Orders Page");
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byCssSelector(cssOrdersPage));
-		ItradeOrderHelperFactory.clickOnBlankArea();
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		ItradeOrderHelperFactory.mouseOverToLogoutArrow();
 	}
 }

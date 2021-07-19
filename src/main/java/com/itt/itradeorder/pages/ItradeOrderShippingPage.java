@@ -18,7 +18,8 @@ public class ItradeOrderShippingPage {
 	private static String xInTransitCount = "//div[contains(text(), 'In Transit')]/following-sibling::div";
 	private static String xAllShippingCount = "//div[contains(text(), 'All')]/following-sibling::div";
 	private static String cssShippingPage = "div.menu-item.ng-star-inserted span.mi-icon.itn-icon-shipping-wh";
-	private static String cssClickOnShip = "button.action-primary[type='submit']";;
+	private static String cssClickOnShip = "button.action-primary[type='submit']";
+	private static String xShippingPage = "//div[contains(@class,'mi-border')]/following-sibling::span[@class='mi-icon itn-icon-shipping-wh']";
 	
 	
 	public Integer getShipTodayCount() throws Exception {
@@ -57,8 +58,9 @@ public class ItradeOrderShippingPage {
 	
 	public void clickOnShippingPage() throws Exception {
 		LOG.debug("Click on Shipping Page");
-		getBrowserDriver().click(byCssSelector(cssShippingPage));
+		getBrowserDriver().click(byXpath(xShippingPage));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		ItradeOrderHelperFactory.mouseOverToLogoutArrow();
 	}
 
 	public void clickOnShipPO() throws Exception {

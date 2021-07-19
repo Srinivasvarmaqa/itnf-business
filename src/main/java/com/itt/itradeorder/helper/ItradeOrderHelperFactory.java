@@ -94,7 +94,7 @@ public class ItradeOrderHelperFactory {
 
 	public static void waitForloaderToDisapper() throws Exception {
 		int count = 0;
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssLoader), Timeout.TEN_SECONDS_TIMEOUT));
+		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssLoader), Timeout.TWO_SECONDS_TIMEOUT));
 		getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
 		while(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0 && count<20) {
 			Thread.sleep(1000);
@@ -128,5 +128,10 @@ public class ItradeOrderHelperFactory {
 	public static void clickOnBlankArea() throws Exception {
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byXpath(xClickBlank));
+	}
+
+	public static void mouseOverToLogoutArrow() throws Exception {
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		getBrowserDriver().moveToElement(byCssSelector(cssUserMenuArrowButton));
 	}
 }
