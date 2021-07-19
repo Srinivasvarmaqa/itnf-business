@@ -5,6 +5,7 @@ import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.withClearOption;
 import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
 import static com.itt.browser.common.BrowserLocator.withText;
+import static com.itt.browser.common.BrowserLocator.withWaitForVisibility;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import org.slf4j.Logger;
@@ -34,7 +35,10 @@ public class ItradeOrderOrdersPage {
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		if (getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0) {
 			getBrowserDriver().click(byCssSelector(cssSearchButton));
-		} 
+		} else {
+			getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
+			getBrowserDriver().click(byCssSelector(cssSearchButton));
+		}
 		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
 	}
 	
