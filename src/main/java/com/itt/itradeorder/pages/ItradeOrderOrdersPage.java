@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.itt.common.Timeout;
 import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
+import com.itt.itradeorder.pages.ItradeOrderLoginPage.USER;
 
 public class ItradeOrderOrdersPage {
 	private static final Logger LOG = LoggerFactory.getLogger(ItradeOrderOrdersPage.class);
@@ -26,14 +27,14 @@ public class ItradeOrderOrdersPage {
 	private static String xCommentsCount = "//div[contains(text(), 'Comments')]/following-sibling::div";
 	private static String xInProgressCount = "//div[contains(text(), 'In Progress')]/following-sibling::div";
 	private static String cssOrdersPage = "div.menu-item.ng-star-inserted span.mi-icon.itn-icon-order";
-
+	private static String cssLoader = "div.loader-overlay";
+	
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchButton),Timeout.FIFTEEN_SECONDS_TIMEOUT));
-		getBrowserDriver().click(byCssSelector(cssSearchButton));
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchInputText),Timeout.FIFTEEN_SECONDS_TIMEOUT));
+		if (getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0) {
+			getBrowserDriver().click(byCssSelector(cssSearchButton));
+		} 
 		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
 	}
 	
