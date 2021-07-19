@@ -32,8 +32,8 @@ public class ItradeOrderOrdersPage {
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchButton),Timeout.FIFTEEN_SECONDS_TIMEOUT));
 		getBrowserDriver().click(byCssSelector(cssSearchButton));
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchInputText),Timeout.FIFTEEN_SECONDS_TIMEOUT));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchInputText),Timeout.FIFTEEN_SECONDS_TIMEOUT));
 		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
 	}
 	
