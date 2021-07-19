@@ -191,6 +191,7 @@ public class ItradeOrderOrderDetailsPage {
 	public String getPOStatus() throws Exception {
 		LOG.debug("Get the PO Status");
 		int i = 0;
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		while(getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == "--" && i<=20) {
 			Thread.sleep(1000);
 			i++;

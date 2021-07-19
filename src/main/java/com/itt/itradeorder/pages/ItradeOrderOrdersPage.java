@@ -29,10 +29,10 @@ public class ItradeOrderOrdersPage {
 
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchButton),Timeout.FIVE_SECONDS_TIMEOUT));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchButton),Timeout.FIFTEEN_SECONDS_TIMEOUT));
 		getBrowserDriver().click(byCssSelector(cssSearchButton));
-		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchInputText),Timeout.FIVE_SECONDS_TIMEOUT));
+		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchInputText),Timeout.FIFTEEN_SECONDS_TIMEOUT));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
 	}
@@ -56,13 +56,11 @@ public class ItradeOrderOrdersPage {
 	
 	public Integer getAllOrdersCount() throws Exception {
 		LOG.info("Get All Orders Count");	
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xAllOrdersCount)).trim());
 	}
 	
 	public Integer getNewOrdersCount() throws Exception {
 		LOG.info("Get New Orders Count");	
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xNewOrdersCount)).trim());
 	}
 	
@@ -88,9 +86,8 @@ public class ItradeOrderOrdersPage {
 	
 	public void clickOnOrdersPage() throws Exception {
 		LOG.debug("Click on Orders Page");
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().click(byCssSelector(cssOrdersPage));
-		ItradeOrderHelperFactory.clickOnBlankArea();
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		ItradeOrderHelperFactory.mouseOverToSomeElement();
 	}
 }
