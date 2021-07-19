@@ -48,6 +48,7 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xDoneWithCharges = "//span[contains(text(), 'DONE WITH CHARGES')]";
 	private static String xTotalPOCost = "//div[@class='footer-content']/itn-panel-button//div[text()='Total PO Cost']/following-sibling::div";
 	private static String xLineItemTotalCharge = "//div[text()='Total']/following-sibling::div";
+	private static String cssLoader = "div.loader-overlay";
 	
 	public boolean isAddItemExists() throws Exception {
 		return getBrowserDriver().isElementPresent(byName(nAddProduct));
@@ -191,8 +192,7 @@ public class ItradeOrderOrderDetailsPage {
 	public String getPOStatus() throws Exception {
 		LOG.debug("Get the PO Status");
 		int i = 0;
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		while((getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == null || getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == "--") && i<=20) {
+		while((getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0 && getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == "--") && i<=20) {
 			Thread.sleep(1000);
 			i++;
 		}
