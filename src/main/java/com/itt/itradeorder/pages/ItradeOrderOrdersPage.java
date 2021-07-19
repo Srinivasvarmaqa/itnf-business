@@ -34,6 +34,7 @@ public class ItradeOrderOrdersPage {
 		LOG.info("Look for PO Number:" + poNumber);
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		if (getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0) {
+			LOG.info("Loader Size:" + getBrowserDriver().findElements(byCssSelector(cssLoader)).size());
 			getBrowserDriver().click(byCssSelector(cssSearchButton));
 		} else {
 			getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));

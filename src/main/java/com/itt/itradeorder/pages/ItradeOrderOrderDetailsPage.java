@@ -349,7 +349,7 @@ public class ItradeOrderOrderDetailsPage {
 					String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]",charge.getName());
 					getBrowserDriver().click(byXpath(xClickDot));
 					getBrowserDriver().click(byXpath(xAddCharges));
-					getBrowserDriver().waitForElement(withCustomTimeout(byXpath(xAddCharge), Timeout.FIVE_SECONDS_TIMEOUT));
+					getBrowserDriver().waitForElement(withCustomTimeout(byXpath(xAddCharge), Timeout.TWO_SECONDS_TIMEOUT));
 					getBrowserDriver().click(byCssSelector(xAddCharge));
 
 					String xChargeType = String.format("//mat-select[@id='chargeType_%s']", charges.size() - 1);
