@@ -192,7 +192,7 @@ public class ItradeOrderOrderDetailsPage {
 		LOG.debug("Get the PO Status");
 		int i = 0;
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		while(getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == null && getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == "--" && i<=20) {
+		while((getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == null || getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() == "--") && i<=20) {
 			Thread.sleep(1000);
 			i++;
 		}
