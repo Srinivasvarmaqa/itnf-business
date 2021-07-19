@@ -3,7 +3,6 @@ package com.itt.itradeorder.pages;
 import static com.itt.browser.common.BrowserLocator.byCssSelector;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.withClearOption;
-import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
 import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.browser.common.BrowserLocator.withWaitForVisibility;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
@@ -11,9 +10,7 @@ import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.itt.common.Timeout;
 import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
-import com.itt.itradeorder.pages.ItradeOrderLoginPage.USER;
 
 public class ItradeOrderOrdersPage {
 	private static final Logger LOG = LoggerFactory.getLogger(ItradeOrderOrdersPage.class);
@@ -33,10 +30,10 @@ public class ItradeOrderOrdersPage {
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		if (getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0) {
-			LOG.info("Loader Size:" + getBrowserDriver().findElements(byCssSelector(cssLoader)).size());
+		try {
 			getBrowserDriver().click(byCssSelector(cssSearchButton));
-		} else {
+		} catch (Exception e) {
+			LOG.debug("Exception during click on search button due to page loading,retrying");
 			getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
 			getBrowserDriver().click(byCssSelector(cssSearchButton));
 		}
