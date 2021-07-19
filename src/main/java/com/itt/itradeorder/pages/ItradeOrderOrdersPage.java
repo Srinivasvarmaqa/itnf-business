@@ -32,7 +32,7 @@ public class ItradeOrderOrdersPage {
 	public void searchPO(String poNumber) throws Exception {
 		LOG.info("Look for PO Number:" + poNumber);
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		if (getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0) {
+		if (getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0) {
 			getBrowserDriver().click(byCssSelector(cssSearchButton));
 		} 
 		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
