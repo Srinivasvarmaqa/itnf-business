@@ -146,6 +146,7 @@ public class OMSHelperFactory {
 		LOG.info("LOGOUT FROM OMS");
 		getBrowserDriver().switchToFrame(byFrame(headerFrameName));
 		getBrowserDriver().click(byCssSelector(cssLogoutButton));
+		getBrowserDriver().waitForPageLoad();
 		getBrowserDriver().waitForElement(byId(iDUserName));
 	}
 

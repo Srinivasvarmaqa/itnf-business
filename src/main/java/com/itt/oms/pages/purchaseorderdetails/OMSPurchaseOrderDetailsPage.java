@@ -68,7 +68,7 @@ public class OMSPurchaseOrderDetailsPage {
 		LOG.info("Submit the Purchase Order");
 		getBrowserDriver().click(byName(nSubmit));
 		
-		if (!getBrowserDriver().isElementPresent(withCustomTimeout(byCssSelector(idXdockDialog), Timeout.TWO_SECONDS_TIMEOUT))) {
+		if (!getBrowserDriver().waitForElement(withCustomTimeout(byId(idXdockDialog), Timeout.FIVE_SECONDS_TIMEOUT))) {
 			LOG.info("Click on submit button");
 			clickOnSubmitButton();
 		}
