@@ -111,7 +111,7 @@ public class TMSNewOrderPage {
 	public String getLoadNumber() throws Exception {
 		LOG.info("Get Load Number");
 		int i = 0;
-		while (getBrowserDriver().getText(byCssSelector(cssLoadNumber)) == null && i <= 2) {
+		while (getBrowserDriver().getText(byCssSelector(cssLoadNumber)) == null && i <= 5) {
 			LOG.info("Waiting for the Load Number to populate");
 			Thread.sleep(1000);
 			i++;
