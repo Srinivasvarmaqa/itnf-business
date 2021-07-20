@@ -37,7 +37,13 @@ public class ItradeOrderOrdersPage {
 			getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
 			getBrowserDriver().click(byCssSelector(cssSearchButton));
 		}
-		getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
+		try {
+			getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
+		} catch (Exception e) {
+			LOG.debug("Exception during entering PO in search due to page loading,retrying");
+			getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
+			getBrowserDriver().sendValue(withText(byCssSelector(cssSearchInputText), poNumber));
+		}
 	}
 	
 	public void RefreshPO(String poNumber) throws Exception {
