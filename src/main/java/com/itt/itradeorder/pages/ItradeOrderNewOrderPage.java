@@ -33,7 +33,6 @@ public class ItradeOrderNewOrderPage {
 	
 	public void openNewOrder() throws Exception {
 		LOG.info("Click on New Order");
-		getBrowserDriver().switchToFrame(byId("frameSP"));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		if (getBrowserDriver().isElementPresent(byName(nNewOrder))) {
             getBrowserDriver().click(byName(nNewOrder));
