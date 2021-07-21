@@ -59,11 +59,11 @@ public class OMSPurchaseOrderPage {
 		OMSHelperFactory.switchToMainFrame();
 
 		LOG.info("Enter the PO input values");
-		getBrowserDriver().selectDropDown(selectDropDownValue(byId(idVendorDropDown),DROPDOWN.VISIBLETEXT.toString(), vendor));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byXpath(xShipToDropDown),DROPDOWN.VISIBLETEXT.toString(), shipTo));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byXpath(xRoutingDropDown),DROPDOWN.VALUE.toString(), routing));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byXpath(xModeDropDown),DROPDOWN.VALUE.toString(), mode));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byName(nTemplateDropDown),DROPDOWN.VISIBLETEXT.toString(), templateName));
+		getBrowserDriver().selectDropDown(selectDropDownValue(byId(idVendorDropDown),DROPDOWN.VISIBLETEXT.toString(), vendor));
 
 		LOG.info("Click Create Order Button");
 		getBrowserDriver().click(byName(nSubmit));
