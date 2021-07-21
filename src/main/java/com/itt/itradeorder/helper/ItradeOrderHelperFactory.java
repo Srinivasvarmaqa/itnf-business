@@ -96,7 +96,8 @@ public class ItradeOrderHelperFactory {
 		int count = 0;
 		getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssLoader), Timeout.TWO_SECONDS_TIMEOUT));
 		getBrowserDriver().waitForElement(withWaitForVisibility(byCssSelector(cssLoader), "false"));
-		while(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0 && count<20) {
+		while(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()!=0 && count<60) {
+			LOG.info("WAIT FOR LOADER TO DISAPPER - " + count);
 			Thread.sleep(1000);
 			count++;
 		}

@@ -174,8 +174,10 @@ public class ItradeOrderOrderDetailsPage {
 
 	public void clickOnSideNavCrossIcon() throws Exception {
 		LOG.debug("Click on side navigationclose button");
-		getBrowserDriver().click(byCssSelector(cssSearchCrossButtonSideNavigator));
-		ItradeOrderHelperFactory.waitForloaderToDisapper();
+		if (getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchCrossButtonSideNavigator), Timeout.FIVE_SECONDS_TIMEOUT))) {
+			getBrowserDriver().click(byCssSelector(cssSearchCrossButtonSideNavigator));
+			ItradeOrderHelperFactory.waitForloaderToDisapper();
+		}
 	}
 
 	public void clickOnCancelButton() throws Exception {
@@ -192,7 +194,7 @@ public class ItradeOrderOrderDetailsPage {
 	public String getPOStatus() throws Exception {
 		LOG.debug("Get the PO Status");
 		int i = 0;
-		while((getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0 && getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() != "--") && i<=20) {
+		while(!(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0 && getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() != "--" && i<=30)) {
 			Thread.sleep(1000);
 			i++;
 		}
@@ -208,7 +210,9 @@ public class ItradeOrderOrderDetailsPage {
 	public void enterSONumber() throws Exception {
 		LOG.info("Enter SO Number");
 		long randomNumber = (long) Math.floor(Math.random() * 900000L) + 10000L;
-		getBrowserDriver().sendValue(withText(byXpath(xSOInput), "SOAuto" + randomNumber));
+		if (getBrowserDriver().isElementPresent(byXpath(xSOInput))) {
+			getBrowserDriver().sendValue(withText(byXpath(xSOInput), "SOAuto" + randomNumber));
+		}
 	}
 	
 	public void clickOnAcceptButton() throws Exception {

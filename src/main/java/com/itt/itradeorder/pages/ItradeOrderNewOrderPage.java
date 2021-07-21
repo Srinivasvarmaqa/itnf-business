@@ -24,12 +24,22 @@ public class ItradeOrderNewOrderPage {
 	private static String xCreateButton = "//span[contains(text(),'CREATE')]";
 	private static String cssCrossButton = "div.close-button span.itn-icon-close-x";
 	private static String cssSubmitButton = "button.action-primary[type='submit']";
+    private static String xNewOrder = "//span[contains(text(),'NEW ORDER')]";
+    private static String xSeller = "//mat-label[text()='Seller']/../../../input";
+    private static String xRouting = "//mat-label[contains(text(),'Routing')]/../../../input";
+    private static String xShipFrom = "//mat-label[contains(text(),'Ship From')]/../../../input";
+    private static String xShipTo = "//mat-label[contains(text(),'Ship To')]/../../../input";
 	
 	
 	public void openNewOrder() throws Exception {
 		LOG.info("Click on New Order");
+		getBrowserDriver().switchToFrame(byId("frameSP"));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-		getBrowserDriver().click(byName(nNewOrder));
+		if (getBrowserDriver().isElementPresent(byName(nNewOrder))) {
+            getBrowserDriver().click(byName(nNewOrder));
+           }else {
+                   getBrowserDriver().click(byXpath(xNewOrder));
+           }
 	}
 
 	public boolean isPoNumberExists() throws Exception {
@@ -37,11 +47,11 @@ public class ItradeOrderNewOrderPage {
 	}
 
 	public boolean isSellerExists() throws Exception {
-		return getBrowserDriver().isElementPresent(byName(nSeller));
+		return getBrowserDriver().isElementPresent(byName(nSeller)) || getBrowserDriver().isElementPresent(byXpath(xSeller));
 	}
 
 	public boolean isRoutingExists() throws Exception {
-		return getBrowserDriver().isElementPresent(byName(nRouting));
+		return getBrowserDriver().isElementPresent(byName(nRouting)) || getBrowserDriver().isElementPresent(byXpath(xRouting));
 	}
 
 	public boolean isShipDateExists() throws Exception {
@@ -53,11 +63,11 @@ public class ItradeOrderNewOrderPage {
 	}
 
 	public boolean isShipFromExists() throws Exception {
-		return getBrowserDriver().isElementPresent(byName(nShipFrom));
+		return getBrowserDriver().isElementPresent(byName(nShipFrom)) || getBrowserDriver().isElementPresent(byXpath(xShipFrom));
 	}
 
 	public boolean isShipToExists() throws Exception {
-		return getBrowserDriver().isElementPresent(byName(nShipTo));
+		return getBrowserDriver().isElementPresent(byName(nShipTo)) || getBrowserDriver().isElementPresent(byXpath(xShipTo));
 	}
 	
 	public void createPurchaseOrder(ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
@@ -100,7 +110,11 @@ public class ItradeOrderNewOrderPage {
 	public void selectVendor(String vendor) throws Exception {
 		String xVendorOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", vendor);
 		LOG.debug("Click on the Seller field");
-		getBrowserDriver().click(byName(nSeller));
+		if (getBrowserDriver().isElementPresent(byName(nSeller))) {
+             getBrowserDriver().click(byName(nSeller));
+		}else {
+             getBrowserDriver().click(byXpath(xSeller));
+     }
 
 		LOG.debug("Select the vendor:" + vendor);
 		getBrowserDriver().click(byXpath(xVendorOptions));
@@ -110,13 +124,17 @@ public class ItradeOrderNewOrderPage {
 		LOG.debug("Enter PO Number");
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		long randomNumber = (long) Math.floor(Math.random() * 900000L) + 10000L;
-		getBrowserDriver().sendValue(withText(byId(idPoNumber), "Auto" + randomNumber));
+		getBrowserDriver().sendValue(withText(withClearOption(byId(idPoNumber), true),"Auto" + randomNumber));
 	}
 
 	public void selectRouting(String routing) throws Exception {
 		String xRoutingOptins = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", routing);
 		LOG.debug("Click on the Routing field");
-		getBrowserDriver().click(byName(nRouting));
+		if (getBrowserDriver().isElementPresent(byName(nRouting))) {
+            getBrowserDriver().click(byName(nRouting));
+		}else {
+            getBrowserDriver().click(byXpath(xRouting));
+    }
 
 		LOG.debug("Select the routing option:" + routing);
 		getBrowserDriver().click(byXpath(xRoutingOptins));
@@ -137,7 +155,11 @@ public class ItradeOrderNewOrderPage {
 	public void shipTo(String shipTo) throws Exception {
 		String xShipToOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", shipTo);
 		LOG.debug("Click on the Ship To field");
-		getBrowserDriver().click(byName(nShipTo));
+		if (getBrowserDriver().isElementPresent(byName(nShipTo))) {
+            getBrowserDriver().click(byName(nShipTo));
+		}else {
+            getBrowserDriver().click(byXpath(xShipTo));
+    }
 
 		LOG.debug("Select the ShipTo option:" + shipTo);
 		getBrowserDriver().click(byXpath(xShipToOptions));
@@ -146,7 +168,11 @@ public class ItradeOrderNewOrderPage {
 	public void shipFrom(String shipFrom) throws Exception {
 		String xShipFromOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", shipFrom);
 		LOG.debug("Click on the ShipFrom field");
-		getBrowserDriver().click(byName(nShipFrom));
+		if (getBrowserDriver().isElementPresent(byName(nShipFrom))) {
+            getBrowserDriver().click(byName(nShipFrom));
+		}else {
+            getBrowserDriver().click(byXpath(xShipFrom));
+    }
 
 		LOG.debug("Select the shipFrom option:" + shipFrom);
 		getBrowserDriver().click(byXpath(xShipFromOptions));
