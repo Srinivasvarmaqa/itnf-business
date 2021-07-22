@@ -194,7 +194,7 @@ public class ItradeOrderOrderDetailsPage {
 	public String getPOStatus() throws Exception {
 		LOG.debug("Get the PO Status");
 		int i = 0;
-		while(!(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0 && getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() != "--" && i<=30)) {
+		while(!(getBrowserDriver().findElements(byCssSelector(cssLoader)).size()==0 && getBrowserDriver().getText(byCssSelector(cssPOStatus)).trim() != "--" && i<=60)) {
 			Thread.sleep(1000);
 			i++;
 		}
@@ -394,6 +394,7 @@ public class ItradeOrderOrderDetailsPage {
 							LOG.debug("Is Add charges Enabled");
 							String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", charge.getName());
 							getBrowserDriver().click(byXpath(xClickDot));
+							ItradeOrderHelperFactory.waitForloaderToDisapper();
 							isAddCharge = getBrowserDriver().isElementPresent(byXpath(xAddCharges));
 							getBrowserDriver().click(byXpath(xEditCharges));
 							ItradeOrderHelperFactory.waitForloaderToDisapper();

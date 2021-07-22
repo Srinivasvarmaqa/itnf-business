@@ -49,6 +49,7 @@ public class ItradeOrderOrdersPage {
 	public void RefreshPO(String poNumber) throws Exception {
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().sendValue(withText(withClearOption(byCssSelector(cssSearchInputText), true), poNumber));
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
 
 	public String getPOStatus(String poNumber) throws Exception {
