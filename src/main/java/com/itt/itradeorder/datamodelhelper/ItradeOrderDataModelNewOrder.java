@@ -25,4 +25,8 @@ public class ItradeOrderDataModelNewOrder {
 	private String currency;
 	@JsonProperty("template")
 	private String templatename;
+	@JsonProperty("transportMode")
+	private String transportmode;
+	@JsonProperty("buyer")
+	private String buyer;
 }

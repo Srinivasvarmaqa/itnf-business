@@ -29,6 +29,9 @@ public class ItradeOrderNewOrderPage {
     private static String xRouting = "//mat-label[contains(text(),'Routing')]/../../../input";
     private static String xShipFrom = "//mat-label[contains(text(),'Ship From')]/../../../input";
     private static String xShipTo = "//mat-label[contains(text(),'Ship To')]/../../../input";
+    private static String xTransportMode = "//mat-select[@formcontrolname='transportMode']";
+    private static String xCurrency = "//mat-select[@formcontrolname='currency']";
+    private static String xBuyer = "//input[@name='Buyer']";
 	
 	
 	public void openNewOrder() throws Exception {
@@ -75,6 +78,9 @@ public class ItradeOrderNewOrderPage {
 		String shipFrom = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getShipFromWarehouse();
 		String routing = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getRouting();
 		String templateName = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getTemplatename();
+		String transportMode = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getTransportmode();
+		String currency = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getCurrency();
+		String buyer = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getBuyer();
 
 		LOG.info("Open Buyer Menu");
 		this.openNewOrder();
@@ -98,6 +104,18 @@ public class ItradeOrderNewOrderPage {
 
 		if (shipTo != null) {
 			this.shipTo(shipTo);
+		}
+
+		if (buyer != null) {
+			this.buyer(buyer);
+		}
+
+		if (transportMode != null) {
+			this.transportMode(transportMode);
+		}
+
+		if (currency != null) {
+			this.currency(currency);
 		}
 
 		LOG.info("Click Create Order Button");
@@ -175,6 +193,33 @@ public class ItradeOrderNewOrderPage {
 
 		LOG.debug("Select the shipFrom option:" + shipFrom);
 		getBrowserDriver().click(byXpath(xShipFromOptions));
+	}
+
+	public void transportMode(String transportMode) throws Exception {
+		String xTransportModeOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", transportMode);
+		LOG.debug("Click on the Transport Mode");
+		getBrowserDriver().click(withScroll(byXpath(xTransportMode)));
+
+		LOG.debug("Select the Transport Mode option:" + transportMode);
+		getBrowserDriver().click(byXpath(xTransportModeOptions));
+	}
+
+	public void currency(String currency) throws Exception {
+		String xCurrencyOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", currency);
+		LOG.debug("Click on the Currency");
+		getBrowserDriver().click(withScroll(byXpath(xCurrency)));
+
+		LOG.debug("Select the Currency option:" + currency);
+		getBrowserDriver().click(byXpath(xCurrencyOptions));
+	}
+
+	public void buyer(String buyer) throws Exception {
+		String xBuyerOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", buyer);
+		LOG.debug("Click on the Buyer");
+		getBrowserDriver().click(withScroll(byXpath(xBuyer)));
+
+		LOG.debug("Select the buyer option:" + buyer);
+		getBrowserDriver().click(byXpath(xBuyerOptions));
 	}
 
 	public void clickOnCloseButton() throws Exception {
