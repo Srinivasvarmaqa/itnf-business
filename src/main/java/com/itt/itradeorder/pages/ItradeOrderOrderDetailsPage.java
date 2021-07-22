@@ -174,7 +174,7 @@ public class ItradeOrderOrderDetailsPage {
 
 	public void clickOnSideNavCrossIcon() throws Exception {
 		LOG.debug("Click on side navigationclose button");
-		if (getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchCrossButtonSideNavigator), Timeout.FIVE_SECONDS_TIMEOUT))) {
+		if (getBrowserDriver().waitForElement(withCustomTimeout(byCssSelector(cssSearchCrossButtonSideNavigator), Timeout.FIFTEEN_SECONDS_TIMEOUT))) {
 			getBrowserDriver().click(byCssSelector(cssSearchCrossButtonSideNavigator));
 			ItradeOrderHelperFactory.waitForloaderToDisapper();
 		}
