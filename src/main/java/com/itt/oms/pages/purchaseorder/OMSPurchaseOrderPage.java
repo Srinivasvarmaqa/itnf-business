@@ -48,12 +48,14 @@ public class OMSPurchaseOrderPage {
 		getBrowserDriver().click(byCssSelector(cssOMS));
 		LOG.debug("Switch to Main frame");
 		OMSHelperFactory.switchToMainFrame();
-		while(true) {
+		int i=0;
+		while(i < 60) {
 			try {
 				getBrowserDriver().switchToFrame(withSwitchToMainWindow(byFrame("frameSP"), false));
 				break;
 			} catch (Exception e) {
 				LOG.debug("Retring until Frame found");
+				Thread.sleep(1000);
 			}
 		}
 	}

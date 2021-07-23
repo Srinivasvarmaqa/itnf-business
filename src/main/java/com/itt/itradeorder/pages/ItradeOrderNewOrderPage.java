@@ -71,7 +71,19 @@ public class ItradeOrderNewOrderPage {
 	public boolean isShipToExists() throws Exception {
 		return getBrowserDriver().isElementPresent(byName(nShipTo)) || getBrowserDriver().isElementPresent(byXpath(xShipTo));
 	}
-	
+
+	public boolean isBuyerExists() throws Exception {
+		return getBrowserDriver().isElementPresent(withScroll(byXpath(xBuyer)));
+	}
+
+	public boolean isTransportModeExists() throws Exception {
+		return getBrowserDriver().isElementPresent(withScroll(byXpath(xTransportMode)));
+	}
+
+	public boolean isCurrencyExists() throws Exception {
+		return getBrowserDriver().isElementPresent(withScroll(byXpath(xCurrency)));
+	}
+
 	public void createPurchaseOrder(ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
 		String vendor = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getVendor();
 		String shipTo = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getShipToWarehouse();
