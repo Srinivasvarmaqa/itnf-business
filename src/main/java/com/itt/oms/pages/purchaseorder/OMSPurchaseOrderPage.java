@@ -41,7 +41,7 @@ public class OMSPurchaseOrderPage {
 		getBrowserDriver().click(byCssSelector(cssBuyerMenu));
 	}
 
-	public void openOMSMenu() throws Exception {
+	public void openOMSMenuRewrite() throws Exception {
 		LOG.debug("Switch to Left Frame");
 		OMSHelperFactory.switchToLeftFrame();
 		LOG.info("Click on OMS menu");
