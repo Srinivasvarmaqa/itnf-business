@@ -1,14 +1,15 @@
 package com.itt.oms.pages.login;
 
-import static com.itt.browser.common.BrowserLocator.*;
-import static com.itt.browser.common.BrowserUtils.TEN_SECONDS_TIMEOUT;
-import static com.itt.browser.common.BrowserUtils.THIRTY_SECONDS_TIMEOUT;
+import static com.itt.browser.common.BrowserLocator.byCssSelector;
+import static com.itt.browser.common.BrowserLocator.byId;
+import static com.itt.browser.common.BrowserLocator.byXpath;
+import static com.itt.browser.common.BrowserLocator.withClearOption;
+import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.itt.common.Timeout;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
 
 public class OMSLoginPage {

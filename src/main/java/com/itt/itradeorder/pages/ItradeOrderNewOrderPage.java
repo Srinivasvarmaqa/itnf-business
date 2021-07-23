@@ -101,41 +101,41 @@ public class ItradeOrderNewOrderPage {
 		this.enterPONumber();
 
 		if (vendor != null) {
-			LOG.info("Select Vendor");
+			LOG.info("Select Vendor: " + vendor);
 			this.selectVendor(vendor);
 		}
 
 		if (routing != null) {
-			LOG.info("Select Routing");
+			LOG.info("Select Routing: " + routing);
 			this.selectRouting(routing);
 		}
 
-		LOG.info("Select Ship Date");
+		LOG.info("Select Ship Date: " + OMSHelperFactory.getDate());
 		this.addShipDate();
-		LOG.info("Select Arrival Date");
+		LOG.info("Select Arrival Date: " + OMSHelperFactory.getDate());
 		this.addArrivalDate();
 		if (shipFrom != null) {
-			LOG.info("Select Ship From");
+			LOG.info("Select Ship From: " + shipFrom);
 			this.shipFrom(shipFrom);
 		}
 
 		if (shipTo != null) {
-			LOG.info("Select Ship To");
+			LOG.info("Select Ship To: " + shipTo);
 			this.shipTo(shipTo);
 		}
 
 		if (buyer != null) {
-			LOG.info("Select Buyer");
+			LOG.info("Select Buyer: " + buyer);
 			this.buyer(buyer);
 		}
 
 		if (transportMode != null) {
-			LOG.info("Select Transport Mode");
+			LOG.info("Select Transport Mode: " + transportMode);
 			this.transportMode(transportMode);
 		}
 
 		if (currency != null) {
-			LOG.info("Select Currency");
+			LOG.info("Select Currency: " + currency);
 			this.currency(currency);
 		}
 

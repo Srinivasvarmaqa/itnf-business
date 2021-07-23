@@ -14,13 +14,10 @@ import com.itt.oms.helper.OMSHelperFactory;
 
 public class OMSPurchaseOrderDetailsPage {
 
-	private static final Logger LOG = LoggerFactory.getLogger(OMSPurchaseOrderDetailsPage.class);
-	private static String xQuantity = "//div[@id='lineitemsdiv']/table/tbody/tr[2]/td[4]//td[1]//input";
+	private static final Logger LOG = LoggerFactory.getLogger(OMSPurchaseOrderDetailsPage.class);;
 	private static String cssQuantity = "input[name^='quantity']";
-	private static String xPrice = "//div[@id='lineitemsdiv']/table/tbody/tr[2]/td[5]//input";
 	private static String cssPrice = "input[name^='price']";
 	private static String nSubmit = "MySubmit";
-	private static String cssVendorDropDownLobLaws = "select[name^='vendor']";
 	private static String cssVendorDropDown = "#lineitemsdiv select[name^='vendor']";
 	private static String nRoutingType = "RoutingType";
 	private static String nCustfrtCostTextBox = "custfrt";

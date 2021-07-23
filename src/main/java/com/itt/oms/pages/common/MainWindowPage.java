@@ -18,10 +18,7 @@ import com.itt.common.Timeout;
 public class MainWindowPage {
 	private static final Logger LOG = LoggerFactory.getLogger(MainWindowPage.class);
 
-	private static String xPONumberTxt = "//input[@name='ponum']";
 	private static String cssHeaderFrame = "frame[name='headerFrame']";
-	private static String xLeftFrame = "//frame[1])[2]";
-	private static String cssMainFrameWindow = "frame[name='mainFrame']";
 	private static String cssPPortal = ".noactivelink table tr td:nth-child(3) a >img";
 	private static String cssPPortalOffbutton = ".noactivelink table tbody tr td:nth-child(4) a font";
 	private static String cssMPortalOffbutton = ".noactivelink table tbody tr td:nth-child(2) a font";

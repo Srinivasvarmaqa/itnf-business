@@ -14,7 +14,6 @@ public class OMSReceiveOrderPage {
 
 	private static final Logger LOG = LoggerFactory.getLogger(OMSReceiveOrderPage.class);
 	private static String cssReceivingMenu = "a[title='Receiving']";
-	private static String cssReceivingStatusMenu = "a[title='Receiving W/H']";
 	private static String xReceivingStatusMenu = "//a[@title='Receiving W/H' or (@title='Receiving' and contains(@href, 'submenu'))]";
 	private static String cssPONumberlistedLink = "a[href*='receive_details']";
 	private static String cssSaveButton = "input[name='Save']";

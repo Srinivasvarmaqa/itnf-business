@@ -26,9 +26,6 @@ public class OMSPurchaseOrderPage {
 	private static String xRoutingDropDown = "//select[@name='RoutingType']";
 	private static String nTemplateDropDown = "Template";
 	private static String xShipToDropDown = "//select[@name='DeliveryPoint']";
-	private static String cssCustomerOrder = "a[title='Customer Order']";
-	private static final String OMS = "oms";
-	private static final String CUSTOMER_ORDER = "Customer Order";
 
 	public void openBuyerMenu() throws Exception {
 

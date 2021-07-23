@@ -476,10 +476,13 @@ public class ItradeOrderOrderDetailsPage {
 				LOG.debug("Get Total Price");
 				Double TotalPrice = 0.0;
 				List<ItradeOrderDataModelProducts> products;
+				List<ItradeOrderDataModelProducts> charges;
 				if (user.equals(USER.BUYER)) {
 					products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyeraddproducts();
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyerlinelevelcharges();
 				} else if (user.equals(USER.VENDOR)) {
 					products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendoraddproducts();
+					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendorlinelevelcharges();
 				} else {
 					throw new Exception("Incorrect user" + user.toString());
 				}
@@ -490,15 +493,17 @@ public class ItradeOrderOrderDetailsPage {
 							String xGetPrice = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span//span[contains(@class,'showProductDetail ng-star-inserted')]", product.getName());
 							String TotalPriceInCurrency = getBrowserDriver().getText(byXpath(xGetPrice)).trim();
 							TotalPrice += Double.parseDouble(TotalPriceInCurrency.replaceAll("[^\\d.]", ""));
-							String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", product.getName());
-							getBrowserDriver().click(byXpath(xClickDot));
-							if (getBrowserDriver().isElementPresent(byXpath(xEditCharges))) {
-								getBrowserDriver().click(byXpath(xEditCharges));
-								String LineItemTotalPoCost1 = getBrowserDriver().getText(byXpath(xLineItemTotalCharge)).trim();
-								TotalPrice += Double.parseDouble(LineItemTotalPoCost1.replaceAll("[^\\d.]", ""));
-								getBrowserDriver().click(byXpath(xDoneWithCharges));
-							}else {
-								ItradeOrderHelperFactory.clickOnBlankArea();
+							if (charges != null) {
+								String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", product.getName());
+								getBrowserDriver().click(byXpath(xClickDot));
+								if (getBrowserDriver().isElementPresent(byXpath(xEditCharges))) {
+									getBrowserDriver().click(byXpath(xEditCharges));
+									String LineItemTotalPoCost1 = getBrowserDriver().getText(byXpath(xLineItemTotalCharge)).trim();
+									TotalPrice += Double.parseDouble(LineItemTotalPoCost1.replaceAll("[^\\d.]", ""));
+									getBrowserDriver().click(byXpath(xDoneWithCharges));
+								}else {
+									ItradeOrderHelperFactory.clickOnBlankArea();
+								}
 							}
 						}
 					}

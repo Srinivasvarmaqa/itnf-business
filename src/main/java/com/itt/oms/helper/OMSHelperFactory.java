@@ -1,5 +1,21 @@
 package com.itt.oms.helper;
 
+import static com.itt.browser.common.BrowserLocator.byCssSelector;
+import static com.itt.browser.common.BrowserLocator.byFrame;
+import static com.itt.browser.common.BrowserLocator.byId;
+import static com.itt.browser.common.BrowserLocator.byName;
+import static com.itt.browser.common.BrowserLocator.byXpath;
+import static com.itt.browser.common.BrowserLocator.selectDropDownValue;
+import static com.itt.browser.common.BrowserLocator.withAttributeName;
+import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
+import static com.itt.browser.common.BrowserLocator.withText;
+import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.itt.common.Timeout;
@@ -17,17 +33,6 @@ import com.itt.oms.pages.shipmentorder.OMSShipmentOrderPage;
 import com.itt.oms.pages.tmsneworders.TMSNewOrderPage;
 import com.itt.oms.pages.vendor.OMSVendorOrderManagementPage;
 import com.itt.oms.pages.xdock.OMSXdockPage;
-
-import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static com.itt.browser.common.BrowserLocator.*;
-
-import org.openqa.selenium.NoSuchWindowException;
-import org.slf4j.Logger;
 
 public class OMSHelperFactory {
 
@@ -47,7 +52,6 @@ public class OMSHelperFactory {
 	private TMSNewOrderPage tMSNewOrderPage = new TMSNewOrderPage();
 	private OMSLoadStatusPage oMSLoadStatusPage = new OMSLoadStatusPage();
 	private OMSMenuNavigationPage oMSMenuNavigationPage = new OMSMenuNavigationPage();
-	private static final String cssHeaderFrame = "frame[name='headerFrame']";
 	private static final String cssLogoutButton = "a[href*='logout.cfm']";
 	private static final String leftFrameName = "leftFrame";
 	private static final String headerFrameName = "headerFrame";
@@ -56,12 +60,9 @@ public class OMSHelperFactory {
 	private static final String cssPONumberInput = "input[name='ponum']";
 	private static final String idOrderStatus = "TitleStatusDiv";
 	private static final String nPONumberSearchTextBox = "txtsearch";
-	private static final String nButtonSearch = "search";
 	private static final String cssButtonSearch = "input[name='search' i]";
-	private static final String cssPONumberlistedLink = "a[href*='receive_details']";
 	private static final String cssSearchDropDown = "select[name='SearchPOSO']";
 	private static final String cssOrderInvoiceStatus = "#headerinfodiv > table td:nth-child(2) font:nth-child(2)";
-	private static final String xPONumberLink = "//a[@href='%s']";
 	private static final String iDUserName = "UserName";
 	private static String project;
 

@@ -16,7 +16,6 @@ public class OMSShipmentOrderPage {
 
 	private static final Logger LOG = LoggerFactory.getLogger(OMSShipmentOrderPage.class);
 	private static String cssShippingMenu = "a[title='Shipping']";
-	private static String cssShippingStatusMenu = "a[title='Shipping W/H']";
 	private static String xShippingStatusMenu = "//a[@title='Shipping W/H' or @title='Shipping Status']";
 	private static String cssPONumberlistedLink = "a[href*='shipping_details.cfm']";
 	private static String cssSaveButton = "input[name='Save']";
