@@ -113,7 +113,7 @@ public class OMSPurchaseOrderDetailsPage {
 	}
 	
 	public String getVendorPOForTopco() throws Exception {
-		LOG.info("test,,," + getBrowserDriver().getText(byXpath(xVendorPONumber)));
+		LOG.debug("Vendor PO Number" + getBrowserDriver().getText(byXpath(xVendorPONumber)));
 	    return getBrowserDriver().getText(byXpath(xVendorPONumber));
 	}
 	
