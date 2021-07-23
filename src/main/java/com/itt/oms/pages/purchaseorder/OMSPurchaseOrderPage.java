@@ -1,12 +1,10 @@
 package com.itt.oms.pages.purchaseorder;
 
 import static com.itt.browser.common.BrowserLocator.byCssSelector;
-import static com.itt.browser.common.BrowserLocator.byFrame;
 import static com.itt.browser.common.BrowserLocator.byId;
 import static com.itt.browser.common.BrowserLocator.byName;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.selectDropDownValue;
-import static com.itt.browser.common.BrowserLocator.withSwitchToMainWindow;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import org.slf4j.Logger;
@@ -41,23 +39,11 @@ public class OMSPurchaseOrderPage {
 		getBrowserDriver().click(byCssSelector(cssBuyerMenu));
 	}
 
-	public void openOMSMenuRewrite() throws Exception {
+	public void openOMSMenu() throws Exception {
 		LOG.debug("Switch to Left Frame");
 		OMSHelperFactory.switchToLeftFrame();
 		LOG.info("Click on OMS menu");
 		getBrowserDriver().click(byCssSelector(cssOMS));
-		LOG.debug("Switch to Main frame");
-		OMSHelperFactory.switchToMainFrame();
-		int i=0;
-		while(i < 60) {
-			try {
-				getBrowserDriver().switchToFrame(withSwitchToMainWindow(byFrame("frameSP"), false));
-				break;
-			} catch (Exception e) {
-				LOG.debug("Retring until Frame found");
-				Thread.sleep(1000);
-			}
-		}
 	}
 
 	public void createDirectPurchaseOrder(OMSDataModelHelperFactory omsDataModelHelperFactory) throws Exception {

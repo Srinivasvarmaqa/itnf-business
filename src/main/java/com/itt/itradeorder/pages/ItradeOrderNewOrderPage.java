@@ -35,7 +35,7 @@ public class ItradeOrderNewOrderPage {
 	
 	
 	public void openNewOrder() throws Exception {
-		LOG.info("Click on New Order");
+		LOG.debug("Click on New Order");
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		if (getBrowserDriver().isElementPresent(byName(nNewOrder))) {
             getBrowserDriver().click(byName(nNewOrder));
@@ -94,39 +94,48 @@ public class ItradeOrderNewOrderPage {
 		String currency = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getCurrency();
 		String buyer = itradeOrderDataModelHelperFactory.getItradeOrderDataModelNewOrder().getBuyer();
 
-		LOG.info("Open Buyer Menu");
+		LOG.info("Click New Order Button");
 		this.openNewOrder();
 
 		LOG.info("Enter PO Number");
 		this.enterPONumber();
 
 		if (vendor != null) {
+			LOG.info("Select Vendor");
 			this.selectVendor(vendor);
 		}
 
 		if (routing != null) {
+			LOG.info("Select Routing");
 			this.selectRouting(routing);
 		}
 
+		LOG.info("Select Ship Date");
 		this.addShipDate();
+		LOG.info("Select Arrival Date");
 		this.addArrivalDate();
 		if (shipFrom != null) {
+			LOG.info("Select Ship From");
 			this.shipFrom(shipFrom);
 		}
 
 		if (shipTo != null) {
+			LOG.info("Select Ship To");
 			this.shipTo(shipTo);
 		}
 
 		if (buyer != null) {
+			LOG.info("Select Buyer");
 			this.buyer(buyer);
 		}
 
 		if (transportMode != null) {
+			LOG.info("Select Transport Mode");
 			this.transportMode(transportMode);
 		}
 
 		if (currency != null) {
+			LOG.info("Select Currency");
 			this.currency(currency);
 		}
 

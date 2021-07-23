@@ -268,22 +268,22 @@ public class ItradeOrderOrderDetailsPage {
 	}
 	
 	public Integer getPOItemsCount() throws Exception {
-		LOG.info("Get PO Items Count");	
+		LOG.debug("Get PO Items Count");
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xItemsCount)).trim());
 	}
 	
 	public Integer getPOChargesCount() throws Exception {
-		LOG.info("Get PO charges Count");	
+		LOG.info("Get PO charges Count");
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xChargesCount)).trim());
 	}
 	
 	public Integer getPOHistoryCount() throws Exception {
-		LOG.info("Get PO history Count");	
+		LOG.info("Get PO history Count");
 		return Integer.parseInt(getBrowserDriver().getText(byXpath(xHistoryCount)).trim());
 	}
 	
 	public Integer getAllItemlineCount() throws Exception {
-		LOG.info("Get All Item line Count");	
+		LOG.debug("Get All Item line Count");
 		return getBrowserDriver().findElements(byCssSelector(cssItemSize)).size();
 	}
 	
@@ -293,7 +293,7 @@ public class ItradeOrderOrderDetailsPage {
 	}
 	
 	public Boolean verifyPOItemCount() throws Exception {
-		LOG.info("Verify Po Items count");	
+		LOG.debug("Verify Po Items count");
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		Integer POItemsCount = this.getPOItemsCount();
 		Integer AllItemLineCount = this.getAllItemlineCount();
@@ -470,10 +470,10 @@ public class ItradeOrderOrderDetailsPage {
 			}
 
 			public Boolean verifyTotalPOCost(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
-				LOG.info("Get PO Total Cost");
+				LOG.debug("Get PO Total Cost");
 				String TotalPoCost1 = getBrowserDriver().getText(byXpath(xTotalPOCost)).trim();
 				Double TotalPoCost = Double.parseDouble(TotalPoCost1.replaceAll("[^\\d.]", ""));
-				LOG.info("Get Total Price");
+				LOG.debug("Get Total Price");
 				Double TotalPrice = 0.0;
 				List<ItradeOrderDataModelProducts> products;
 				if (user.equals(USER.BUYER)) {
