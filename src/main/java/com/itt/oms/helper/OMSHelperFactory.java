@@ -8,6 +8,7 @@ import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.selectDropDownValue;
 import static com.itt.browser.common.BrowserLocator.withAttributeName;
 import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
+import static com.itt.browser.common.BrowserLocator.withSwitchToMainWindow;
 import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
@@ -64,6 +65,8 @@ public class OMSHelperFactory {
 	private static final String cssSearchDropDown = "select[name='SearchPOSO']";
 	private static final String cssOrderInvoiceStatus = "#headerinfodiv > table td:nth-child(2) font:nth-child(2)";
 	private static final String iDUserName = "UserName";
+	private static final String xEnhancedOMSOff = "//a[@href='javascript: setAltMenus();']/font[contains(text(),'Off')]";
+	private static final String xEnhancedOMSOn = "//a[@href='javascript: setAltMenus();']/font[contains(text(),'On')]";
 	private static String project;
 
 	public String getProject() {
@@ -149,6 +152,20 @@ public class OMSHelperFactory {
 		getBrowserDriver().click(byCssSelector(cssLogoutButton));
 		getBrowserDriver().waitForPageLoad();
 		getBrowserDriver().waitForElement(byId(iDUserName));
+	}
+
+	public void enableEnhancedOMSIfDisabled() throws Exception {
+		LOG.info("Click on Enhanced OMS if disabled");
+		getBrowserDriver().switchToFrame(byFrame(headerFrameName));
+		if (getBrowserDriver().waitForElement(withCustomTimeout(byXpath(xEnhancedOMSOff), Timeout.FIVE_SECONDS_TIMEOUT))) {
+			LOG.info("Enhanced OMS disabled Enabling it");
+			getBrowserDriver().click(byXpath(xEnhancedOMSOff));
+		}else {
+			LOG.info("Enhanced OMS already enabled");
+		}
+		getBrowserDriver().switchToFrame(byFrame(headerFrameName));
+		getBrowserDriver().waitForElement(withCustomTimeout(byXpath(xEnhancedOMSOn), Timeout.FIVE_SECONDS_TIMEOUT));
+
 	}
 
 	public String getPONumber() throws Exception {
