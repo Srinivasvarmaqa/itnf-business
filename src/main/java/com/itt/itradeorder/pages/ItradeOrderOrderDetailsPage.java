@@ -10,6 +10,8 @@ import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -469,31 +471,45 @@ public class ItradeOrderOrderDetailsPage {
 				return isAddCharge;
 			}
 
-			public Boolean verifyTotalPOCost(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
+			public Boolean verifyTotalPOCost(ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
 				LOG.debug("Get PO Total Cost");
 				String TotalPoCost1 = getBrowserDriver().getText(byXpath(xTotalPOCost)).trim();
 				Double TotalPoCost = Double.parseDouble(TotalPoCost1.replaceAll("[^\\d.]", ""));
 				LOG.debug("Get Total Price");
 				Double TotalPrice = 0.0;
-				List<ItradeOrderDataModelProducts> products;
-				List<ItradeOrderDataModelProducts> charges;
-				if (user.equals(USER.BUYER)) {
-					products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyeraddproducts();
-					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyerlinelevelcharges();
-				} else if (user.equals(USER.VENDOR)) {
-					products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendoraddproducts();
-					charges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendorlinelevelcharges();
-				} else {
-					throw new Exception("Incorrect user" + user.toString());
+				List<ItradeOrderDataModelProducts> buyerProducts;
+				List<ItradeOrderDataModelProducts> buyerCharges;
+				List<ItradeOrderDataModelProducts> vendorProducts;
+				List<ItradeOrderDataModelProducts> vendorCharges;
+				List<ItradeOrderDataModelProducts> allProducts = null;
+				List<ItradeOrderDataModelProducts> allCharges = null;
+				buyerProducts = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyeraddproducts();
+				buyerCharges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyerlinelevelcharges();
+				vendorProducts = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendoraddproducts();
+				vendorCharges = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendorlinelevelcharges();
+				if (buyerProducts !=null && vendorProducts !=null) {
+					allProducts = Stream.concat(buyerProducts.stream(), vendorProducts.stream()).collect(Collectors.toList());
+				}else if(buyerProducts !=null && vendorProducts ==null ){
+					allProducts = buyerProducts;
+				}else {
+					allProducts = vendorProducts;
 				}
-				if (products != null) {
-					for (ItradeOrderDataModelProducts product: products) {
+				if (buyerCharges !=null && vendorCharges !=null) {
+					allCharges = Stream.concat(buyerCharges.stream(), vendorCharges.stream()).collect(Collectors.toList());
+				}else if(buyerCharges !=null && vendorCharges ==null){
+					allCharges = buyerCharges;
+				}else {
+					allCharges = vendorCharges;
+				}
+
+				if (allProducts != null) {
+					for (ItradeOrderDataModelProducts product: allProducts) {
 						if (product.getName() != null && product.getPrice() != 0.0 && product.getQuantity() != 0) {
 							LOG.debug("Get Total Price of each item");
 							String xGetPrice = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span//span[contains(@class,'showProductDetail ng-star-inserted')]", product.getName());
 							String TotalPriceInCurrency = getBrowserDriver().getText(byXpath(xGetPrice)).trim();
 							TotalPrice += Double.parseDouble(TotalPriceInCurrency.replaceAll("[^\\d.]", ""));
-							if (charges != null) {
+							if (allCharges != null) {
 								String xClickDot = String.format("//span[contains(text(), '%s')]/ancestor::div[@fxlayout='row']//span[contains(@class,'itn-icon-more-horizontal')]", product.getName());
 								getBrowserDriver().click(byXpath(xClickDot));
 								if (getBrowserDriver().isElementPresent(byXpath(xEditCharges))) {
