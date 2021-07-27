@@ -1,6 +1,10 @@
 package com.itt.oms.pages.purchaseorder;
 
-import static com.itt.browser.common.BrowserLocator.*;
+import static com.itt.browser.common.BrowserLocator.byCssSelector;
+import static com.itt.browser.common.BrowserLocator.byId;
+import static com.itt.browser.common.BrowserLocator.byName;
+import static com.itt.browser.common.BrowserLocator.byXpath;
+import static com.itt.browser.common.BrowserLocator.selectDropDownValue;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import org.slf4j.Logger;
@@ -22,9 +26,6 @@ public class OMSPurchaseOrderPage {
 	private static String xRoutingDropDown = "//select[@name='RoutingType']";
 	private static String nTemplateDropDown = "Template";
 	private static String xShipToDropDown = "//select[@name='DeliveryPoint']";
-	private static String cssCustomerOrder = "a[title='Customer Order']";
-	private static final String OMS = "oms";
-	private static final String CUSTOMER_ORDER = "Customer Order";
 
 	public void openBuyerMenu() throws Exception {
 
@@ -33,6 +34,13 @@ public class OMSPurchaseOrderPage {
 
 		LOG.info("Click on Buyer Menu from the left menu");
 		getBrowserDriver().click(byCssSelector(cssBuyerMenu));
+	}
+
+	public void openOMSMenu() throws Exception {
+		LOG.debug("Switch to Left Frame");
+		OMSHelperFactory.switchToLeftFrame();
+		LOG.info("Click on OMS menu");
+		getBrowserDriver().click(byCssSelector(cssOMS));
 	}
 
 	public void createDirectPurchaseOrder(OMSDataModelHelperFactory omsDataModelHelperFactory) throws Exception {
@@ -59,11 +67,11 @@ public class OMSPurchaseOrderPage {
 		OMSHelperFactory.switchToMainFrame();
 
 		LOG.info("Enter the PO input values");
-		getBrowserDriver().selectDropDown(selectDropDownValue(byId(idVendorDropDown),DROPDOWN.VISIBLETEXT.toString(), vendor));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byXpath(xShipToDropDown),DROPDOWN.VISIBLETEXT.toString(), shipTo));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byXpath(xRoutingDropDown),DROPDOWN.VALUE.toString(), routing));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byXpath(xModeDropDown),DROPDOWN.VALUE.toString(), mode));
 		getBrowserDriver().selectDropDown(selectDropDownValue(byName(nTemplateDropDown),DROPDOWN.VISIBLETEXT.toString(), templateName));
+		getBrowserDriver().selectDropDown(selectDropDownValue(byId(idVendorDropDown),DROPDOWN.VISIBLETEXT.toString(), vendor));
 
 		LOG.info("Click Create Order Button");
 		getBrowserDriver().click(byName(nSubmit));

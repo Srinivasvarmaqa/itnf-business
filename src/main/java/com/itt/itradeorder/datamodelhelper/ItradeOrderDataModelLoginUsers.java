@@ -1,4 +1,4 @@
-package com.itt.oms.datamodelhelper;
+package com.itt.itradeorder.datamodelhelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,9 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class OMSDataModelLoginUsers {
-	private static final Logger LOG = LoggerFactory.getLogger(OMSDataModelLoginUsers.class);
-
+public class ItradeOrderDataModelLoginUsers {
+	private static final Logger LOG = LoggerFactory.getLogger(ItradeOrderDataModelLoginUsers.class);
 	@JsonProperty("buyer")
 	private String buyerusername;
 	@JsonProperty("vendor")

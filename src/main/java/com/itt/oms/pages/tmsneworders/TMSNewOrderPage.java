@@ -81,11 +81,13 @@ public class TMSNewOrderPage {
 		getBrowserDriver().selectDropDown(selectDropDownValue(byCssSelector(cssSelectCarrierDropDown), DROPDOWN.VISIBLETEXT.toString(), carrier));
 
 		getBrowserDriver().waitForPageLoad();
-
+		Thread.sleep(2000);
 		LOG.info("Switch to Main Frame");
 		OMSHelperFactory.switchToMainFrame();
 
 		this.clickSubmitButton();
+		getBrowserDriver().waitForPageLoad();
+		Thread.sleep(2000);
 	}
 	
 	public void clickSubmitButton() throws Exception {
@@ -106,8 +108,15 @@ public class TMSNewOrderPage {
 	    getBrowserDriver().click(byName(nSelectCarrierDropDown));
     }
 
-    public String getLoadNumber() throws Exception {
-    	return getBrowserDriver().getText(byCssSelector(cssLoadNumber));
-    }
+	public String getLoadNumber() throws Exception {
+		LOG.info("Get Load Number");
+		int i = 0;
+		while (getBrowserDriver().getText(byCssSelector(cssLoadNumber)) == null && i <= 5) {
+			LOG.info("Waiting for the Load Number to populate");
+			Thread.sleep(1000);
+			i++;
+		}
+		return getBrowserDriver().getText(byCssSelector(cssLoadNumber));
+	}
     
 }

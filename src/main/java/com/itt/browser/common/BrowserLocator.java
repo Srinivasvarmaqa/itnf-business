@@ -21,6 +21,7 @@ public class BrowserLocator {
 		public static final String VISIBILITY = "visibility";
 		public static final String SWITCH_TO_MAIN_WINDOW = "switchToMainWindow";
 		public static final String FRAMES = "frames";
+		public static final String SCROLL_TO = "scrollTo";
 	}
 
 	public static class VALUES {
@@ -40,7 +41,7 @@ public class BrowserLocator {
 		if (System.getProperty("DEFAULT_TIMEOUT") != null) {
 			defaultTimeout = Integer.parseInt(System.getProperty("DEFAULT_TIMEOUT"));
 		} else {
-			defaultTimeout = 60;
+			defaultTimeout = 30;
 		}
 		return defaultTimeout;
 	}
@@ -269,4 +270,16 @@ public class BrowserLocator {
 		params.put(KEYS.ALERT_INPUT, alertInput);
 		return params;
 	}
+
+	/**
+	 * Prepares the params for scroll to element
+	 * @param byProperty HashMap <String, String>
+	 * @return HashMap<String, String> to be used for Driver APIs
+	 */
+
+	public static HashMap<String, String> withScroll(final HashMap<String, String> byProperty) {
+		byProperty.put(KEYS.SCROLL_TO, "true");
+		return byProperty;
+	}
+
 }

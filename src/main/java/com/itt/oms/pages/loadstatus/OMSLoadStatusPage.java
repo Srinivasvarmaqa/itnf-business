@@ -1,22 +1,17 @@
 package com.itt.oms.pages.loadstatus;
 
 import static com.itt.browser.common.BrowserLocator.byCssSelector;
-import static com.itt.browser.common.BrowserLocator.byId;
 import static com.itt.browser.common.BrowserLocator.byName;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.selectDropDownValue;
-import static com.itt.browser.common.BrowserLocator.withAlertAction;
-import static com.itt.browser.common.BrowserLocator.withClearOption;
 import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
 import static com.itt.browser.common.BrowserLocator.withText;
-import static com.itt.browser.common.BrowserUtils.TEN_SECONDS_TIMEOUT;
-import static com.itt.browser.common.BrowserUtils.THIRTY_SECONDS_TIMEOUT;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.itt.common.Timeout;
-import com.itt.factoryhelper.BrowserHelperFactory.ALERT;
 import com.itt.factoryhelper.BrowserHelperFactory.DROPDOWN;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
 import com.itt.oms.helper.OMSHelperFactory;

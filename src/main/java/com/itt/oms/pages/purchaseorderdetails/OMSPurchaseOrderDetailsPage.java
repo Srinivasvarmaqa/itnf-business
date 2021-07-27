@@ -14,13 +14,10 @@ import com.itt.oms.helper.OMSHelperFactory;
 
 public class OMSPurchaseOrderDetailsPage {
 
-	private static final Logger LOG = LoggerFactory.getLogger(OMSPurchaseOrderDetailsPage.class);
-	private static String xQuantity = "//div[@id='lineitemsdiv']/table/tbody/tr[2]/td[4]//td[1]//input";
+	private static final Logger LOG = LoggerFactory.getLogger(OMSPurchaseOrderDetailsPage.class);;
 	private static String cssQuantity = "input[name^='quantity']";
-	private static String xPrice = "//div[@id='lineitemsdiv']/table/tbody/tr[2]/td[5]//input";
 	private static String cssPrice = "input[name^='price']";
 	private static String nSubmit = "MySubmit";
-	private static String cssVendorDropDownLobLaws = "select[name^='vendor']";
 	private static String cssVendorDropDown = "#lineitemsdiv select[name^='vendor']";
 	private static String nRoutingType = "RoutingType";
 	private static String nCustfrtCostTextBox = "custfrt";
@@ -33,6 +30,10 @@ public class OMSPurchaseOrderDetailsPage {
     private static String idXdockDialog = "ModalContainerDivDialog";
     private static String xMONumber = "//div[@id='headerinfodiv']//font[contains(text(), 'PO Number')]/font";
     private static String idCustomerReferenceNumber = "conum";
+    private static String xTotalPrice = "//div[@id='totalsdiv']//font[text()='Total Price']/following-sibling::font";
+    private static String xTotalBrokerPrice = "//div[@id='totalsdiv']//font[text()='Total Broker Price']/following-sibling::font";
+    private static String xTotalQty = "//div[@id='totalsdiv']//font[text()='Total QTY']/following-sibling::font";
+    private static String xTotalBrokerQty = "//div[@id='totalsdiv']//font[text()='Total Broker QTY']/following-sibling::font";
 
 
 	public void submitPurchaseOrder(OMSDataModelHelperFactory omsDataModelHelperFactory) throws Exception {
@@ -64,7 +65,7 @@ public class OMSPurchaseOrderDetailsPage {
 		LOG.info("Submit the Purchase Order");
 		getBrowserDriver().click(byName(nSubmit));
 		
-		if (!getBrowserDriver().isElementPresent(withCustomTimeout(byCssSelector(idXdockDialog), Timeout.TWO_SECONDS_TIMEOUT))) {
+		if (!getBrowserDriver().waitForElement(withCustomTimeout(byId(idXdockDialog), Timeout.FIVE_SECONDS_TIMEOUT))) {
 			LOG.info("Click on submit button");
 			clickOnSubmitButton();
 		}
@@ -112,7 +113,7 @@ public class OMSPurchaseOrderDetailsPage {
 	}
 	
 	public String getVendorPOForTopco() throws Exception {
-		LOG.info("test,,," + getBrowserDriver().getText(byXpath(xVendorPONumber)));
+		LOG.debug("Vendor PO Number" + getBrowserDriver().getText(byXpath(xVendorPONumber)));
 	    return getBrowserDriver().getText(byXpath(xVendorPONumber));
 	}
 	
@@ -124,5 +125,25 @@ public class OMSPurchaseOrderDetailsPage {
 	public String getCustomerReferenceNumber() throws Exception {
 		LOG.info("Get Customer reference Number");
 	    return getBrowserDriver().getAttributeValue(withAttributeName(byId(idCustomerReferenceNumber), "value"));
+	}
+
+	public String getTotalQuantity() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalQty));
+	}
+
+	public String getTotalBrokerQuantity() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalBrokerQty));
+	}
+
+	public String getTotalPrice() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalPrice));
+	}
+
+	public String getTotalBrokerPrice() throws Exception {
+		LOG.info("Get total quanity");
+		return getBrowserDriver().getText(byXpath(xTotalBrokerPrice));
 	}
 }

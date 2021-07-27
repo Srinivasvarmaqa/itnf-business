@@ -2,6 +2,7 @@ package com.itt.oms.pages.shipmentorder;
 
 import org.slf4j.LoggerFactory;
 
+import com.itt.common.Timeout;
 import com.itt.factoryhelper.BrowserHelperFactory.ALERT;
 import com.itt.factoryhelper.BrowserHelperFactory.DROPDOWN;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
@@ -15,7 +16,6 @@ public class OMSShipmentOrderPage {
 
 	private static final Logger LOG = LoggerFactory.getLogger(OMSShipmentOrderPage.class);
 	private static String cssShippingMenu = "a[title='Shipping']";
-	private static String cssShippingStatusMenu = "a[title='Shipping W/H']";
 	private static String xShippingStatusMenu = "//a[@title='Shipping W/H' or @title='Shipping Status']";
 	private static String cssPONumberlistedLink = "a[href*='shipping_details.cfm']";
 	private static String cssSaveButton = "input[name='Save']";
@@ -98,7 +98,7 @@ public class OMSShipmentOrderPage {
 	}
 
 	public void clickSubmitButton() throws Exception {
-		LOG.info("Click on Submit Button");
+		LOG.debug("Click on Submit Button");
 		getBrowserDriver().click(byCssSelector(cssSubmitButton));
 	}
 
@@ -125,7 +125,8 @@ public class OMSShipmentOrderPage {
 	}
 
 	public void selectBioEngineered() throws Exception {
-		getBrowserDriver().selectDropDown(selectDropDownValue(byCssSelector(cssBioEngineeredDropDown), DROPDOWN.VISIBLETEXT.toString(), "bioengineer"));
+		if (getBrowserDriver().isElementPresent(withCustomTimeout(byCssSelector(cssBioEngineeredDropDown), Timeout.FIVE_SECONDS_TIMEOUT)))
+			getBrowserDriver().selectDropDown(selectDropDownValue(byCssSelector(cssBioEngineeredDropDown), DROPDOWN.VISIBLETEXT.toString(), "bioengineer"));
 	}
 
 }

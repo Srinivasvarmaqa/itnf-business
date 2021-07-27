@@ -19,7 +19,6 @@ public class OMSSubmitInvoicePage {
 	private static String idInvoiceDate = "FInvoiceDate";
 	private static String cssSaveButton = "input[name='Save']";
 	private static String cssSubmitButton = "input[name^='MySubmit']";
-	private static String cssOrderInvoiceStatus = "#headerinfodiv > table td:nth-child(2) font:nth-child(2)";
 
 	
 	public void openInvoiceMenu() throws Exception {
