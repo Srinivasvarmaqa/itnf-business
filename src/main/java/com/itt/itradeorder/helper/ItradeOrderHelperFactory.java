@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,5 +135,12 @@ public class ItradeOrderHelperFactory {
 	public static void mouseOverToLogoutArrow() throws Exception {
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 		getBrowserDriver().moveToElement(byCssSelector(cssUserMenuArrowButton));
+	}
+
+	public void pressTab(Integer numberOfTabs) throws Exception {
+		while(numberOfTabs == 0) {
+			getBrowserDriver().sendSpecialKeys(Keys.TAB);
+			numberOfTabs--;
+		}
 	}
 }

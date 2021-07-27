@@ -116,6 +116,42 @@ public class ItradeOrderOrderDetailsPage {
 		}
 	}
 	
+	public void addProductsWithoutSubmitPO(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
+		LOG.info("Add Product");
+		List<ItradeOrderDataModelProducts> products;
+
+		if (user.equals(USER.BUYER)) {
+			products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getBuyeraddproducts();
+		} else if (user.equals(USER.VENDOR)) {
+			products = itradeOrderDataModelHelperFactory.getItradeOrderDataModelOrderDetails().getVendoraddproducts();
+		} else {
+			throw new Exception("Incorrect user" + user.toString());
+		}
+		if (products != null) {
+			int i = getBrowserDriver().findElements(byCssSelector(cssItemSize)).size();
+			String productName;
+			String xProductDropDown;
+			String idPrice;
+			String idQuantity;
+			for (ItradeOrderDataModelProducts product: products) {
+				LOG.debug("Add product");
+				productName = product.getName();
+				getBrowserDriver().sendValue(withText(byName(nAddProduct), productName));
+				xProductDropDown = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", productName);
+				getBrowserDriver().click(byXpath(xProductDropDown));
+
+				LOG.debug("Enter Quantity");
+				idQuantity = "quantity" + i;
+				getBrowserDriver().sendValue(withText(byId(idQuantity), Integer.toString(product.getQuantity())));
+
+				LOG.debug("Enter Price");
+				idPrice = "price" + i;
+				getBrowserDriver().sendValue(withText(byId(idPrice), Double.toString(product.getPrice())));
+				i++;
+			}
+		}
+	}
+
 	public void addProductsWithCharges(USER user, ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory)
 			throws Exception {
 		LOG.info("Add Product");
@@ -159,6 +195,11 @@ public class ItradeOrderOrderDetailsPage {
 	public void clickOnSubmitButton() throws Exception {
 		LOG.debug("Click on Submit Button");
 		getBrowserDriver().click(byXpath(xSubmitButton));
+	}
+
+	public void clickOnDiscardButton() throws Exception {
+		LOG.debug("Click on Discrad Button");
+		getBrowserDriver().click(byXpath(xDiscardButton));
 	}
 
 	public String getPONumber() throws Exception {

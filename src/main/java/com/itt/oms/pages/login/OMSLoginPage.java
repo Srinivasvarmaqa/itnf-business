@@ -7,6 +7,7 @@ import static com.itt.browser.common.BrowserLocator.withClearOption;
 import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
+import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

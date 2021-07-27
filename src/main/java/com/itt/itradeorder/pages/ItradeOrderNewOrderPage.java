@@ -1,8 +1,15 @@
 package com.itt.itradeorder.pages;
 
-import static com.itt.browser.common.BrowserLocator.*;
+import static com.itt.browser.common.BrowserLocator.byCssSelector;
+import static com.itt.browser.common.BrowserLocator.byId;
+import static com.itt.browser.common.BrowserLocator.byName;
+import static com.itt.browser.common.BrowserLocator.byXpath;
+import static com.itt.browser.common.BrowserLocator.withClearOption;
+import static com.itt.browser.common.BrowserLocator.withScroll;
+import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
+import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +28,9 @@ public class ItradeOrderNewOrderPage {
 	private static String nShippingArrivalDate = "arrivalDate";
 	private static String nShipFrom = "Ship From";
 	private static String nShipTo = "Ship To *";
+	private static String nTemplate = "Template";
 	private static String xCreateButton = "//span[contains(text(),'CREATE')]";
+	private static String xCancelButton = "//span[contains(text(),'cancel')]";
 	private static String cssCrossButton = "div.close-button span.itn-icon-close-x";
 	private static String cssSubmitButton = "button.action-primary[type='submit']";
     private static String xNewOrder = "//span[contains(text(),'NEW ORDER')]";
@@ -32,6 +41,7 @@ public class ItradeOrderNewOrderPage {
     private static String xTransportMode = "//mat-select[@formcontrolname='transportMode']";
     private static String xCurrency = "//mat-select[@formcontrolname='currency']";
     private static String xBuyer = "//input[@name='Buyer']";
+    private static String xDateError = "//mat-error[contains(text(),'Enter date as MM/DD/YYYY. ')]";
 	
 	
 	public void openNewOrder() throws Exception {
@@ -44,8 +54,12 @@ public class ItradeOrderNewOrderPage {
            }
 	}
 
+	public boolean isNewOrderExists() throws Exception {
+		return getBrowserDriver().isElementPresent(byName(nNewOrder));
+	}
+
 	public boolean isPoNumberExists() throws Exception {
-		return getBrowserDriver().isElementPresent(byId(idPoNumber));
+		return getBrowserDriver().waitForElement(byId(idPoNumber));
 	}
 
 	public boolean isSellerExists() throws Exception {
@@ -72,6 +86,10 @@ public class ItradeOrderNewOrderPage {
 		return getBrowserDriver().isElementPresent(byName(nShipTo)) || getBrowserDriver().isElementPresent(byXpath(xShipTo));
 	}
 
+	public boolean isTemplateFieldExists() throws Exception {
+		return getBrowserDriver().isElementPresent(byName(nTemplate));
+	}
+
 	public boolean isBuyerExists() throws Exception {
 		return getBrowserDriver().isElementPresent(withScroll(byXpath(xBuyer)));
 	}
@@ -82,6 +100,20 @@ public class ItradeOrderNewOrderPage {
 
 	public boolean isCurrencyExists() throws Exception {
 		return getBrowserDriver().isElementPresent(withScroll(byXpath(xCurrency)));
+	}
+
+	public boolean isShipDateErrorExists() throws Exception {
+		LOG.debug("Enter Invalid Date");
+		getBrowserDriver().sendValue(withText(byName(nShipDate), "Auto123"));
+		getBrowserDriver().sendSpecialKeys(Keys.TAB);
+		return getBrowserDriver().isElementPresent(byXpath(xDateError));
+	}
+
+	public boolean isArrivalDateErrorExists() throws Exception {
+		LOG.debug("Enter Invalid Date");
+		getBrowserDriver().sendValue(withText(byName(nShippingArrivalDate), "Auto123"));
+		getBrowserDriver().sendSpecialKeys(Keys.TAB);
+		return getBrowserDriver().isElementPresent(byXpath(xDateError));
 	}
 
 	public void createPurchaseOrder(ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory) throws Exception {
@@ -181,13 +213,13 @@ public class ItradeOrderNewOrderPage {
 	public void addShipDate() throws Exception {
 		LOG.debug("Enter Ship Date");
 		String shipdate = OMSHelperFactory.getDate();
-		getBrowserDriver().sendValue(withText(byName(nShipDate), shipdate));
+		getBrowserDriver().sendValue(withText(withClearOption(byName(nShipDate), true), shipdate));
 	}
 
 	public void addArrivalDate() throws Exception {
 		LOG.debug("Enter Arrival Date");
 		String arrivaldate = OMSHelperFactory.getDate();
-		getBrowserDriver().sendValue(withText(byName(nShippingArrivalDate), arrivaldate));
+		getBrowserDriver().sendValue(withText(withClearOption(byName(nShippingArrivalDate), true), arrivaldate));
 	}
 
 	public void shipTo(String shipTo) throws Exception {
@@ -207,7 +239,7 @@ public class ItradeOrderNewOrderPage {
 		String xShipFromOptions = String.format("//div[contains(@id,'cdk-overlay-')]//mat-option[@role='option']/span[contains(text(), '%s')]", shipFrom);
 		LOG.debug("Click on the ShipFrom field");
 		if (getBrowserDriver().isElementPresent(byName(nShipFrom))) {
-            getBrowserDriver().click(byName(nShipFrom));
+            getBrowserDriver().click(withScroll(byName(nShipFrom)));
 		}else {
             getBrowserDriver().click(byXpath(xShipFrom));
     }
@@ -257,6 +289,12 @@ public class ItradeOrderNewOrderPage {
 	public void clickOnCreateButton() throws Exception {
 		LOG.info("Click on Create Order Button");
 		getBrowserDriver().click(withScroll(byXpath(xCreateButton)));	
+		ItradeOrderHelperFactory.waitForloaderToDisapper();
+	}
+
+	public void clickOnCancelButton() throws Exception {
+		LOG.info("Click on Cancel Order Button");
+		getBrowserDriver().click(withScroll(byXpath(xCancelButton)));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
 
