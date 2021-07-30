@@ -42,6 +42,8 @@ public class ItradeOrderNewOrderPage {
     private static String xCurrency = "//mat-select[@formcontrolname='currency']";
     private static String xBuyer = "//input[@name='Buyer']";
     private static String xDateError = "//mat-error[contains(text(),'Enter date as MM/DD/YYYY. ')]";
+    private static String xShipDate = "//span[contains(@class, 'itn-icon-day-start')]";
+    private static String xApply = "//button[contains(text(),'Apply')]";
 	
 	
 	public void openNewOrder() throws Exception {
@@ -216,6 +218,12 @@ public class ItradeOrderNewOrderPage {
 		getBrowserDriver().sendValue(withText(withClearOption(byName(nShipDate), true), shipdate));
 	}
 
+	public void selectShipDate() throws Exception {
+		LOG.debug("Select Ship Date");
+		getBrowserDriver().click(byXpath(xShipDate));
+		getBrowserDriver().click(byXpath(xApply));
+	}
+
 	public void addArrivalDate() throws Exception {
 		LOG.debug("Enter Arrival Date");
 		String arrivaldate = OMSHelperFactory.getDate();
@@ -298,4 +306,8 @@ public class ItradeOrderNewOrderPage {
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
 	}
 
+	public boolean isButtonEnabled(String button) throws Exception {
+		LOG.debug("verify Button Enabled");
+		return getBrowserDriver().isButtonEnabled(withScroll(byXpath(button)));
+	}
 }
