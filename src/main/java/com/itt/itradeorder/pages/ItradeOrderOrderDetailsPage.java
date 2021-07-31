@@ -6,6 +6,7 @@ import static com.itt.browser.common.BrowserLocator.byName;
 import static com.itt.browser.common.BrowserLocator.byXpath;
 import static com.itt.browser.common.BrowserLocator.withClearOption;
 import static com.itt.browser.common.BrowserLocator.withCustomTimeout;
+import static com.itt.browser.common.BrowserLocator.withScroll;
 import static com.itt.browser.common.BrowserLocator.withText;
 import static com.itt.factoryhelper.BrowserHelperFactory.getBrowserDriver;
 
@@ -27,7 +28,7 @@ public class ItradeOrderOrderDetailsPage {
 	private static String nAddProduct = "add";
 	private static String xDiscardButton = "//span[contains(text(),'Discard')]";
 	private static String cssCrossButton = "div.close-button span.itn-icon-close-x";
-	private static String xSubmitButton = "//span[contains(text(),'Submit')]";
+	private static String xSubmitButton = "//button[@type='submit']";
 	private static String xCancelButton = "//span[contains(text(),'Cancel')]";
 	private static String cssPONumber = ".itn-jumbo-card .primary-color";
 	private static String cssSearchCrossButton = "div.icon-container.itn-icon-close-x[fxlayout='row']";
@@ -51,6 +52,10 @@ public class ItradeOrderOrderDetailsPage {
 	private static String xTotalPOCost = "//div[@class='footer-content']/itn-panel-button//div[text()='Total PO Cost']/following-sibling::div";
 	private static String xLineItemTotalCharge = "//div[text()='Total']/following-sibling::div";
 	private static String cssLoader = "div.loader-overlay";
+
+	public Boolean isSubmitButtonEnabled() throws Exception {
+		return getBrowserDriver().isElementEnabled(withScroll(byXpath(xSubmitButton)));
+	}
 	
 	public boolean isAddItemExists() throws Exception {
 		return getBrowserDriver().isElementPresent(byName(nAddProduct));
