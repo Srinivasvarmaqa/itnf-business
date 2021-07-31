@@ -35,7 +35,6 @@ public class OMSRewriteHelperFactory {
 		long startTime = System.currentTimeMillis();
 		LOG.debug("Switch to IFrame");
 		getBrowserDriver().waitForElement(byId(iFrameName));
-		getBrowserDriver().waitForElement(byId(iFrameName));
 		getBrowserDriver().switchToFrame(withSwitchToMainWindow(byFrame(iFrameName), false));
 		this.waitForloaderToDisapper();
 		long endTime = System.currentTimeMillis();

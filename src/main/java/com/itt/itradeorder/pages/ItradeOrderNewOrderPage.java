@@ -29,7 +29,7 @@ public class ItradeOrderNewOrderPage {
 	private static String nShipFrom = "Ship From";
 	private static String nShipTo = "Ship To *";
 	private static String nTemplate = "Template";
-	private static String xCreateButton = "//span[contains(text(),'CREATE')]";
+	private static String xCreateButton = "//button[@class='action action-primary mat-button mat-button-base']";
 	private static String xCancelButton = "//span[contains(text(),'cancel')]";
 	private static String cssCrossButton = "div.close-button span.itn-icon-close-x";
 	private static String cssSubmitButton = "button.action-primary[type='submit']";
@@ -45,6 +45,9 @@ public class ItradeOrderNewOrderPage {
     private static String xShipDate = "//span[contains(@class, 'itn-icon-day-start')]";
     private static String xApply = "//button[contains(text(),'Apply')]";
 	
+	public Boolean isCreateButtonEnabled() throws Exception {
+		return getBrowserDriver().isElementEnabled(withScroll(byXpath(xCreateButton)));
+	}
 	
 	public void openNewOrder() throws Exception {
 		LOG.debug("Click on New Order");
@@ -304,10 +307,5 @@ public class ItradeOrderNewOrderPage {
 		LOG.info("Click on Cancel Order Button");
 		getBrowserDriver().click(withScroll(byXpath(xCancelButton)));
 		ItradeOrderHelperFactory.waitForloaderToDisapper();
-	}
-
-	public boolean isButtonEnabled(String button) throws Exception {
-		LOG.debug("verify Button Enabled");
-		return getBrowserDriver().isButtonEnabled(withScroll(byXpath(button)));
 	}
 }
