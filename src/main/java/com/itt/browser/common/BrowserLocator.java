@@ -172,6 +172,7 @@ public class BrowserLocator {
 		byProperty.put(KEYS.TIMEOUT, customTimeout);
 		return byProperty;
 	}
+	
 
 	/**
 	 * Prepares the params clear text from input field before send value

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 import com.itt.oms.helper.OMSHelperFactory;
 import com.itt.omsrewrite.helper.OMSRewriteHelperFactory;
+import com.itt.spend.helper.SPENDHelperFactory;
 
 public class ITTBusinessHelperFactory {
 
@@ -13,6 +14,7 @@ public class ITTBusinessHelperFactory {
 
 	private static ITTBusinessHelperFactory ittBusinessHelperFactory = new ITTBusinessHelperFactory();
 	private OMSHelperFactory oMSHelperFactory = new OMSHelperFactory();
+	private SPENDHelperFactory sPENDHelperFactory = new SPENDHelperFactory();
 	private ItradeOrderHelperFactory itradeOrderHelperFactory = new ItradeOrderHelperFactory();
 	private OMSRewriteHelperFactory oMSRewriteHelperFactory = new OMSRewriteHelperFactory();
 
@@ -24,6 +26,9 @@ public class ITTBusinessHelperFactory {
 
 	public OMSHelperFactory getOMSHelperFactory() {
 		return this.oMSHelperFactory;
+	}
+	public SPENDHelperFactory getSPENDHelperFactory() {
+		return this.sPENDHelperFactory;
 	}
 	
 	public ItradeOrderHelperFactory getItradeOrderHelperFactory() {
